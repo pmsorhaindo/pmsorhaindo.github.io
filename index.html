@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Michael Sorhaindo · software engineer & producer (MyyQii)</title>
-<meta name="description" content="Michael Sorhaindo: Senior Software Engineer at Elsevier, based in Utrecht. TypeScript by day, synthesisers by night as MyyQii. Projects, background and links." />
+<meta name="description" content="Michael Sorhaindo. Senior software engineer at Elsevier, Utrecht. Ships TypeScript by day, bothers synths by night as MyyQii." />
 <link rel="canonical" href="https://pmsorhaindo.com/" />
 <meta name="author" content="Michael Sorhaindo" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -14,14 +14,14 @@
 <meta property="og:site_name" content="Michael Sorhaindo" />
 <meta property="og:url" content="https://pmsorhaindo.com/" />
 <meta property="og:title" content="Michael Sorhaindo · software engineer & producer (MyyQii)" />
-<meta property="og:description" content="Michael Sorhaindo: Senior Software Engineer at Elsevier, based in Utrecht. TypeScript by day, synthesisers by night as MyyQii. Projects, background and links." />
+<meta property="og:description" content="Michael Sorhaindo. Senior software engineer at Elsevier, Utrecht. Ships TypeScript by day, bothers synths by night as MyyQii." />
 <meta property="og:image" content="https://pmsorhaindo.com/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="MICHAEL SORHAINDO in acid-green terminal type on a black CRT-style background" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Michael Sorhaindo · software engineer & producer (MyyQii)" />
-<meta name="twitter:description" content="Michael Sorhaindo: Senior Software Engineer at Elsevier, based in Utrecht. TypeScript by day, synthesisers by night as MyyQii. Projects, background and links." />
+<meta name="twitter:description" content="Michael Sorhaindo. Senior software engineer at Elsevier, Utrecht. Ships TypeScript by day, bothers synths by night as MyyQii." />
 <meta name="twitter:image" content="https://pmsorhaindo.com/og.png" />
 <meta name="theme-color" content="#070807" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -79,7 +79,7 @@
   main { width: min(1100px, calc(100% - 2.5rem)); margin: 0 auto; padding: 2.5rem 0 4rem; }
 
   /* boot */
-  #boot { font-family: var(--crt); font-size: 22px; line-height: 1.15; color: var(--fg-dim); min-height: 13.5em; white-space: pre-wrap; }
+  #boot { font-family: var(--crt); font-size: 22px; line-height: 1.15; color: var(--fg-dim); min-height: 7em; white-space: pre-wrap; }
   #boot .ok { color: var(--fg); }
   #boot .warn { color: var(--amber); }
   .skip { font: 12px var(--mono); color: var(--muted); background: none; border: 1px solid var(--line); padding: .3rem .6rem; cursor: pointer; margin-top: .5rem; }
@@ -196,7 +196,7 @@
 
 <header class="bar">
   <span><span class="led" aria-hidden="true"></span><b>michael@utrecht</b>:~$</span>
-  <span class="hide-sm">uptime: since 2011 (on GitHub, anyway)</span>
+  <span class="hide-sm">up since 2011</span>
   <span class="hide-sm" id="clock" aria-hidden="true"></span>
   <nav aria-label="Sections">
     <a href="#whoami"><span>[1]</span> whoami</a>
@@ -213,12 +213,12 @@
   <section class="hero" aria-label="Intro" style="border-top:0;padding-top:1.5rem">
     <p class="cmd">$ <b>finger michael</b></p>
     <h1>MICHAEL<br>SORHAINDO<span class="cursor" aria-hidden="true"></span></h1>
-    <p class="sub">Senior software engineer. Writes TypeScript by day, <em>bothers synthesisers</em> by night, and runs language models locally mostly to hear the fans spin up.</p>
-    <div class="meta"><span>Utrecht, NL</span><span>Senior SWE @ Elsevier</span><span>Church organist (really)</span><span>Producer as MyyQii</span><span>Cat staff</span></div>
+    <p class="sub">Senior software engineer. Ships TypeScript by day, <em>bothers synths</em> by night.</p>
+    <div class="meta"><span>Utrecht, NL</span><span>Senior SWE @ Elsevier</span><span>Producer as MyyQii</span><span>Cat staff</span></div>
 
     <form class="prompt" id="term" autocomplete="off">
       <label for="cmd">guest@site:~$</label>
-      <input id="cmd" name="cmd" placeholder="type help (or just scroll, it's fine)" spellcheck="false" />
+      <input id="cmd" name="cmd" placeholder="type help. or scroll. your call." spellcheck="false" />
     </form>
     <div class="prompt-out" id="out" role="status" aria-live="polite"></div>
     <div class="chips" aria-label="Quick commands">
@@ -232,63 +232,58 @@
 
   <!-- ===== SWAP:ABOUT (career copy from LinkedIn) ===== -->
   <section id="whoami" aria-labelledby="h-about">
-    <p class="cmd">$ <b>whoami --verbose</b></p>
+    <p class="cmd">$ <b>whoami</b></p>
     <h2 id="h-about">whoami</h2>
     <div class="about">
       <div>
-        <p>I'm a <strong>Senior Software Engineer at Elsevier</strong> in Amsterdam, there since 2020 and senior since 2022. These days that mostly means SciVal, with a growing side order of AI and agentic smart summaries.</p>
-        <p>Before that I built React mobile apps for EA and Twitch at <strong>Ex Machina Group</strong>. Before <em>that</em>, four years of JavaScript at <strong>Brandwatch</strong> in Brighton: turning crowds of Twitter users into insights, helping build a pattern library, and running a reading group on NLP, RL and deep learning. It started at <strong>Ash Gaming</strong> in London, porting Flash games to HTML5 while also serving as office fire marshal. Nothing burned down on my watch.</p>
-        <p>BSc Computer Science (Games) from Brighton, First Class, with a dissertation on a functional ant colony simulation. Then an MSc in Advanced Computer Science at Sussex: ML, applied NLP, and the limits of computation (found them, they're real).</p>
-        <p>Away from the desk I mentor at <strong>codebar.io</strong>, play the organ in church (and the flute, now and then), and make techno as <strong>MyyQii</strong>. Same keyboard skills, different congregation.</p>
+        <p><strong>Senior Software Engineer at Elsevier.</strong> I build SciVal, lately the AI bits.</p>
+        <p>Before that: React mobile apps for EA and Twitch at <strong>Ex Machina</strong>, four years of JavaScript at <strong>Brandwatch</strong>, and Flash-to-HTML5 at <strong>Ash Gaming</strong>.</p>
+        <p>Off the clock: electronic music as <strong>MyyQii</strong>. Also church organ. Yes, really.</p>
       </div>
       <aside class="spec" aria-label="System spec">
         <span class="title">/proc/michael</span>
         <dl>
           <dt>location</dt><dd>Utrecht, NL</dd>
           <dt>day job</dt><dd>Senior SWE · Elsevier</dd>
-          <dt>stack</dt><dd>JavaScript/TS, Python, Java, C++</dd>
-          <dt>locale</dt><dd>en (native), de (limited), fr (un peu)</dd>
-          <dt>side procs</dt><dd>organ, flute, Eurorack</dd>
+          <dt>stack</dt><dd>TypeScript, Python, Java</dd>
           <dt>daemons</dt><dd>cats (root access)</dd>
-          <dt>status</dt><dd style="color:var(--fg)">online, over-caffeinated</dd>
+          <dt>status</dt><dd style="color:var(--fg)">online, caffeinated</dd>
         </dl>
       </aside>
     </div>
     <p class="cmd" style="margin-top:2.5rem">$ <b>git log --oneline career</b></p>
     <ol class="gitlog">
-      <li><span class="h">a2022</span> <b>HEAD</b> Senior Software Engineer @ Elsevier (SciVal)</li>
-      <li><span class="h">e2020</span> Software Engineer @ Elsevier</li>
-      <li><span class="h">x2018</span> Frontend Developer @ Ex Machina Group: React mobile apps for EA, Twitch</li>
-      <li><span class="h">b2014</span> JavaScript Developer @ Brandwatch: Enterprise, then Audiences team</li>
-      <li><span class="h">s2013</span> MSc Advanced Computer Science, University of Sussex</li>
-      <li><span class="h">u2012</span> BSc Computer Science (Games), University of Brighton, First Class</li>
-      <li><span class="h">g2010</span> Ash Gaming: localisation dev → mobile dev (Flash → HTML5). Also: fire marshal</li>
-      <li><span class="h">q2010</span> QA on FuturLab's Coconut Dodge, pre-PSN launch</li>
-      <li><span class="h">0000</span> <i>initial commit: some retail jobs. squashed.</i></li>
+      <li><span class="h">a2022</span> <b>HEAD</b> Senior SWE @ Elsevier · SciVal, AI</li>
+      <li><span class="h">e2020</span> SWE @ Elsevier</li>
+      <li><span class="h">x2018</span> Frontend @ Ex Machina · React mobile for EA, Twitch</li>
+      <li><span class="h">b2014</span> JavaScript @ Brandwatch</li>
+      <li><span class="h">c2014</span> BSc CS, Brighton (First) · MSc, Sussex</li>
+      <li><span class="h">g2010</span> Ash Gaming · localisation dev → mobile/HTML5 dev</li>
+      <li><span class="h">deadbee</span> <i>squash! everything before the code (non-programming). force-pushed. no reflog. don't ask.</i></li>
     </ol>
     <blockquote class="quote">
-      <p>"Mikey is a talented, hardworking and enthusiastic developer who is always keen to learn new things."</p>
-      <cite>Daniel Triggs, my manager, 2015 · <span>// still keen. still learning. now with more synths.</span></cite>
+      <p>"Always keen to learn new things."</p>
+      <cite>Daniel Triggs, my manager, 2015 · <span>// still true</span></cite>
     </blockquote>
   </section>
   <!-- ===== /SWAP:ABOUT ===== -->
 
   <section id="projects" aria-labelledby="h-proj">
-    <p class="cmd">$ <b>ls -la ~/projects | sort --by=interesting</b></p>
+    <p class="cmd">$ <b>ls ~/projects --sort=interesting</b></p>
     <h2 id="h-proj">projects</h2>
     <table class="ls">
       <thead><tr><th>perm</th><th>name</th><th>what it does</th><th>lang</th><th style="text-align:right">★ / last push</th></tr></thead>
       <tbody>
-        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/reddit-mcp">reddit-mcp/</a></td><td class="desc">Read-only Reddit MCP connector: profile, history, subscriptions and feeds, running on a Cloudflare Worker with bearer passthrough.<small>No SDK, no session store. The Worker never holds your refresh token.</small></td><td class="lang">TypeScript</td><td class="num">★0 · 2026-08</td></tr>
-        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/myyqii-site">myyqii-site/</a></td><td class="desc">Minimal landing page for the artist brand MyyQii.<small>Dark, mobile-first, no build step. Like this page, minus the boot sequence.</small></td><td class="lang">JavaScript</td><td class="num">★0 · 2026-09</td></tr>
-        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/codex-session-viewer">codex-session-viewer/</a></td><td class="desc">Browser app for reading the OpenAI Codex session <code>.jsonl</code> files in <code>~/.codex/sessions</code>.<small>For when you want to know what the robot was thinking.</small></td><td class="lang">TypeScript</td><td class="num">★0 · 2025-08</td></tr>
-        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/pino-benchmark">pino-benchmark/</a></td><td class="desc">Stress-testing Node loggers, Pino vs Winston.<small>Logging: the only thing that slows down when you try to measure it.</small></td><td class="lang">JavaScript</td><td class="num">★0 · 2025-02</td></tr>
-        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/toisu">toisu/</a></td><td class="desc">An Express/Koa-inspired server micro-framework for Node.js, built for promise-based middleware.</td><td class="lang">JavaScript</td><td class="num">★0 · 2016</td></tr>
-        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/functional-parser">functional-parser/</a></td><td class="desc">JavaScript and Haskell implementations of a functional parser.</td><td class="lang">HTML</td><td class="num">★2 · 2017</td></tr>
-        <tr><td class="perm">-rwxr--r--</td><td class="name"><a href="https://github.com/pmsorhaindo/FruitMachine">FruitMachine/</a></td><td class="desc">A slot machine in HTML5 and JS.<small>Still the most-starred repo. Gambling sells.</small></td><td class="lang">JavaScript</td><td class="num">★4 · 2013</td></tr>
+        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/reddit-mcp">reddit-mcp/</a></td><td class="desc">Read-only Reddit MCP server on a Cloudflare Worker. Never holds your token.</td><td class="lang">TypeScript</td><td class="num">★0 · 2026-08</td></tr>
+        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/myyqii-site">myyqii-site/</a></td><td class="desc">Landing page for MyyQii. No build step, no regrets.</td><td class="lang">JavaScript</td><td class="num">★0 · 2026-09</td></tr>
+        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/codex-session-viewer">codex-session-viewer/</a></td><td class="desc">Reads Codex session logs. See what the robot was thinking.</td><td class="lang">TypeScript</td><td class="num">★0 · 2025-08</td></tr>
+        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/pino-benchmark">pino-benchmark/</a></td><td class="desc">Pino vs Winston. Loggers, fighting.</td><td class="lang">JavaScript</td><td class="num">★0 · 2025-02</td></tr>
+        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/toisu">toisu/</a></td><td class="desc">Koa-ish micro-framework for promise middleware.</td><td class="lang">JavaScript</td><td class="num">★0 · 2016</td></tr>
+        <tr><td class="perm">drwxr-xr-x</td><td class="name"><a href="https://github.com/pmsorhaindo/functional-parser">functional-parser/</a></td><td class="desc">One parser, two languages: JavaScript and Haskell.</td><td class="lang">HTML</td><td class="num">★2 · 2017</td></tr>
+        <tr><td class="perm">-rwxr--r--</td><td class="name"><a href="https://github.com/pmsorhaindo/FruitMachine">FruitMachine/</a></td><td class="desc">HTML5 slot machine. Most-starred repo. Gambling sells.</td><td class="lang">JavaScript</td><td class="num">★4 · 2013</td></tr>
       </tbody>
     </table>
-    <p class="note">› 94 public repos total. <a href="https://github.com/pmsorhaindo?tab=repositories">ls -R github.com/pmsorhaindo</a></p>
+    <p class="note">› 94 public repos. <a href="https://github.com/pmsorhaindo?tab=repositories">ls -R github.com/pmsorhaindo</a></p>
   </section>
 
   <section id="myyqii" aria-labelledby="h-myyqii">
@@ -298,10 +293,10 @@
       <span class="tag">COMING SOON</span>
       <p class="logo" aria-label="MyyQii"><span>MyyQii</span></p>
       <div class="wave" aria-hidden="true" id="wave"></div>
-      <p>Electronic music from Utrecht. Patched, sequenced and occasionally rescued in post.</p>
+      <p>Electronic music. Patched, sequenced, occasionally rescued.</p>
       <p class="rig">rig: <b>Ableton</b> · <b>Eurorack modular</b> · <b>Hydrasynth</b> · <b>Elektron Octatrack</b></p>
       <div class="btns">
-        <a class="btn" href="https://soundcloud.com/myyqii" target="_blank" rel="noopener noreferrer">▶ listen on SoundCloud</a>
+        <a class="btn" href="https://soundcloud.com/myyqii" target="_blank" rel="noopener noreferrer">▶ listen</a>
         <a class="btn ghost" href="https://myyqii.com" target="_blank" rel="noopener noreferrer">myyqii.com</a>
       </div>
     </div>
@@ -316,7 +311,7 @@
       <li><a href="https://soundcloud.com/myyqii">soundcloud.com/myyqii</a></li>
       <li><a href="https://myyqii.com">myyqii.com</a></li>
     </ul>
-    <footer><span>© <span id="yr"></span> Michael Sorhaindo</span><span>exit 0 · no cookies were harmed</span></footer>
+    <footer><span>© <span id="yr"></span> Michael Sorhaindo</span><span>exit 0 · no cookies</span></footer>
   </section>
 </main>
 
@@ -332,15 +327,12 @@
 
   // boot sequence
   const lines = [
-    ['BIOS rev 2011.10.09 (first commit)', ''],
-    ['probing /dev/brain ............... ', 'ok', 'OK'],
-    ['loading coffee.ko ................ ', 'ok', 'OK'],
-    ['mounting /home/michael (utrecht) . ', 'ok', 'OK'],
-    ['starting typescript-lsp .......... ', 'ok', 'OK'],
-    ['spinning up local llm ............ ', 'warn', 'FANS AUDIBLE'],
-    ['detecting synths ................. ', 'warn', 'TOO MANY'],
-    ['cat.service ...................... ', 'warn', 'DEMANDING FOOD'],
-    ['all systems nominal. ish.', '']
+    ['BIOS rev 2011.10.09', ''],
+    ['mounting /home/michael ...... ', 'ok', 'OK'],
+    ['loading coffee.ko ........... ', 'ok', 'OK'],
+    ['local llm ................... ', 'warn', 'FANS AUDIBLE'],
+    ['synths ...................... ', 'warn', 'TOO MANY'],
+    ['ready. ish.', '']
   ];
   const boot = document.getElementById('boot');
   const skip = document.getElementById('skip');
@@ -362,20 +354,20 @@
   const out = document.getElementById('out');
   const go = (id, msg) => { out.textContent = msg; document.getElementById(id).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); };
   const cmds = {
-    help: () => out.textContent = 'commands: whoami · ls · play myyqii · contact · sudo hire-me · clear',
-    whoami: () => go('whoami', '→ jumping to whoami'),
-    ls: () => go('projects', '→ listing ~/projects'),
-    'play myyqii': () => go('myyqii', '→ signal incoming. headphones recommended.'),
-    contact: () => go('contact', '→ opening ~/.contact'),
-    sudo: () => out.textContent = 'guest is not in the sudoers file. This incident will be reported (to the cats).',
+    help: () => out.textContent = 'try: whoami · ls · play myyqii · contact · sudo hire-me · clear',
+    whoami: () => go('whoami', '→ senior swe. elsevier. utrecht.'),
+    ls: () => go('projects', '→ the good ones.'),
+    'play myyqii': () => go('myyqii', '→ headphones on.'),
+    contact: () => go('contact', '→ ~/.contact'),
+    sudo: () => out.textContent = 'no sudo for you. contact works though.',
     clear: () => out.textContent = '',
-    'rm -rf /': () => out.textContent = 'nice try.',
-    exit: () => out.textContent = 'there is no escape. only scrolling.'
+    'rm -rf /': () => out.textContent = 'no.',
+    exit: () => out.textContent = 'no exit. only scroll.'
   };
   const exec = (raw) => {
     const v = raw.trim().toLowerCase().replace(/^\.\//, '');
     const key = Object.keys(cmds).find(k => v === k || v.startsWith(k + ' ') || (k === 'ls' && v.startsWith('ls')) || (k === 'sudo' && v.startsWith('sudo')) || (k === 'play myyqii' && v.startsWith('play')));
-    key ? cmds[key]() : out.textContent = `command not found: ${raw}. try 'help'.`;
+    key ? cmds[key]() : out.textContent = `${raw}: not found. try help.`;
   };
   document.getElementById('term').addEventListener('submit', e => { e.preventDefault(); const i = e.target.cmd; exec(i.value); i.value = ''; });
   document.querySelectorAll('[data-cmd]').forEach(b => b.addEventListener('click', () => exec(b.dataset.cmd)));
