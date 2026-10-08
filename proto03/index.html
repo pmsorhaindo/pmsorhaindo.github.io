@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MS-84HP — Michael Sorhaindo, modular edition</title>
+<meta name="description" content="Michael Sorhaindo: software engineer, producer as MyyQii, Utrecht. Patched in Eurorack format." />
+<meta name="theme-color" content="#0b0c0d" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0c0d;
+    --rail: linear-gradient(#5b5f63, #2c2f32 40%, #1b1d1f 60%, #44484c);
+    --panel: #17191b;
+    --panel-2: #1e2124;
+    --alu: linear-gradient(160deg, #2f3337, #202326 60%, #1a1c1f);
+    --ink: #e9ebe6;
+    --muted: #9ba19a;
+    --acid: #c8ff3d;
+    --orange: #ff7a1a;
+    --cyan: #3fe0ff;
+    --pink: #ff4fa3;
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; scroll-behavior: smooth; }
+  body { margin: 0; background: radial-gradient(ellipse at 50% -10%, #1d2124, var(--bg) 60%) fixed, var(--bg); color: var(--ink); font: 15px/1.55 var(--display); }
+  a { color: var(--acid); text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+  .case { width: min(1280px, calc(100% - 1.5rem)); margin: 1.5rem auto 3rem; position: relative; padding: 14px; border-radius: 10px;
+    background: linear-gradient(#26292c, #141618); box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08); }
+  .case > header { display: flex; justify-content: space-between; align-items: center; padding: .25rem .5rem .8rem; font: 500 11px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); gap: 1rem; flex-wrap: wrap; }
+  .case > header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .case > header nav a { color: var(--muted); text-decoration: none; }
+  .case > header nav a:hover, .case > header nav a:focus-visible { color: var(--acid); }
+  .case > header .pwr { display: inline-flex; align-items: center; gap: .5rem; }
+  .led { width: 9px; height: 9px; border-radius: 50%; background: #2a3a12; box-shadow: inset 0 0 2px #000; display: inline-block; flex: none; }
+  .led.on { background: var(--acid); box-shadow: 0 0 8px var(--acid), 0 0 2px #fff inset; }
+  .led.red.on { background: #ff3b2f; box-shadow: 0 0 8px #ff3b2f; }
+  .led.blink { animation: blink 1.4s steps(2) infinite; }
+  @keyframes blink { 50% { background: #2a3a12; box-shadow: none; } }
+
+  .row { position: relative; padding: 16px 0; margin-bottom: 10px; }
+  .row::before, .row::after { content: ""; position: absolute; left: 0; right: 0; height: 14px; background: var(--rail); border-radius: 2px;
+    -webkit-mask: radial-gradient(circle 2.5px at 50% 50%, transparent 98%, #000) 0 0 / 28px 14px; mask: radial-gradient(circle 2.5px at 50% 50%, transparent 98%, #000) 0 0 / 28px 14px; }
+  .row::before { top: 0; } .row::after { bottom: 0; }
+  .modules { display: grid; gap: 4px; position: relative; z-index: 1; }
+  .r1 { grid-template-columns: 2fr 1fr; }
+  .r2 { grid-template-columns: 1fr 2fr; }
+  .r3 { grid-template-columns: 1.3fr 1fr; }
+
+  .mod { position: relative; background: var(--alu); border-radius: 3px; padding: 22px 22px 26px; min-width: 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.07), inset 0 -1px 0 rgba(0,0,0,.6), 0 2px 0 #000; }
+  .mod::before, .mod::after { /* mounting screws */ content: ""; position: absolute; width: 9px; height: 9px; border-radius: 50%; left: 10px;
+    background: radial-gradient(circle at 35% 35%, #9aa0a5, #3b3f43 70%); box-shadow: 0 1px 1px #000; }
+  .mod::before { top: 7px; } .mod::after { bottom: 7px; right: 10px; left: auto; }
+  .mod-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border-bottom: 1px solid rgba(255,255,255,.1); padding-bottom: .6rem; margin-bottom: 1.1rem; }
+  .mod-head .id { font: 700 11px var(--mono); letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+  .mod-head .brand { font: 700 11px var(--mono); letter-spacing: .1em; color: var(--acid); }
+  h1, h2 { font-family: var(--display); margin: 0; letter-spacing: -.03em; }
+  h2 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 700; margin-bottom: .75rem; }
+  .silk { font: 500 10px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+  /* hero */
+  .hero h1 { font-size: clamp(3rem, 8.4vw, 7.4rem); line-height: .86; font-weight: 700; letter-spacing: -.055em; }
+  .hero h1 span { color: var(--acid); }
+  .hero .lede { font-size: clamp(1.05rem, 1.7vw, 1.35rem); max-width: 40ch; color: var(--ink); margin: 1.25rem 0 0; }
+  .hero .lede em { font-style: normal; color: var(--orange); }
+  .jackrow { display: flex; gap: 1.5rem; align-items: flex-end; flex-wrap: wrap; margin-top: 1.6rem; }
+  .jack { display: inline-flex; flex-direction: column; align-items: center; gap: .35rem; text-decoration: none; color: var(--muted); }
+  .jack i { width: 26px; height: 26px; border-radius: 50%; display: block; background: radial-gradient(circle, #000 0 5px, #6d7277 6px 8px, #b9bec2 9px 10px, #3d4145 11px); box-shadow: 0 1px 2px #000; }
+  .jack.out i { box-shadow: 0 0 0 3px #0e0f10, 0 0 0 4px rgba(255,255,255,.18); }
+  a.jack:hover i, a.jack:focus-visible i { box-shadow: 0 0 0 3px #0e0f10, 0 0 0 4px var(--acid), 0 0 14px var(--acid); }
+  a.jack:hover, a.jack:focus-visible { color: var(--acid); outline: none; }
+
+  /* vco */
+  .vco { display: flex; flex-direction: column; }
+  .scope { width: 100%; height: 110px; display: block; background: #050806; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(200,255,61,.18), inset 0 0 30px rgba(0,0,0,.8); }
+  .knobs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin: 1.1rem 0; }
+  .knob-wrap { display: flex; flex-direction: column; align-items: center; gap: .4rem; }
+  .knob { --rot: 0deg; width: 56px; height: 56px; border-radius: 50%; position: relative; cursor: ns-resize; touch-action: none;
+    background: radial-gradient(circle at 40% 30%, #4a4f54, #1a1c1e 70%); box-shadow: 0 4px 8px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.15), 0 0 0 4px #121315, 0 0 0 5px rgba(255,255,255,.08); }
+  .knob::after { content: ""; position: absolute; left: 50%; top: 5px; width: 3px; height: 16px; margin-left: -1.5px; background: var(--ink); border-radius: 2px; transform-origin: 50% 23px; transform: rotate(var(--rot)); }
+  .knob.c-acid::after { background: var(--acid); } .knob.c-orange::after { background: var(--orange); } .knob.c-cyan::after { background: var(--cyan); }
+  .knob:focus-visible { outline: 2px solid var(--cyan); outline-offset: 6px; }
+  .pwr-btn { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: .75rem; width: 100%; padding: .8rem 1rem; font: 700 12px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+    background: #0e0f10; color: var(--ink); border: 1px solid rgba(255,255,255,.14); border-radius: 3px; cursor: pointer; }
+  .pwr-btn:hover { border-color: var(--acid); }
+  .pwr-btn[aria-pressed="true"] { color: #000; background: var(--acid); border-color: var(--acid); }
+  .pwr-btn[aria-pressed="true"] .led { background: #000; box-shadow: none; }
+  .hint { font: 400 11px var(--mono); color: var(--muted); margin: .6rem 0 0; }
+
+  /* about */
+  .about p { margin: 0 0 .9rem; color: var(--ink); }
+  .about p strong { color: var(--acid); font-weight: 500; }
+  .meters { display: grid; gap: .55rem; margin-top: 1.25rem; }
+  .meter { display: grid; grid-template-columns: 7.5rem 1fr; align-items: center; gap: .6rem; }
+  .meter .bar { display: flex; gap: 3px; }
+  .meter .bar b { flex: 1; height: 8px; background: #263012; border-radius: 1px; }
+  .meter .bar b.on { background: var(--acid); box-shadow: 0 0 6px rgba(200,255,61,.6); }
+  .meter .bar b.on.hot { background: var(--orange); box-shadow: 0 0 6px rgba(255,122,26,.6); }
+
+  /* projects */
+  .projects .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .proj { background: #121416; border-radius: 2px; padding: 1rem 1rem 1.1rem; display: flex; flex-direction: column; gap: .5rem; min-width: 0; border-top: 3px solid var(--c, var(--acid)); }
+  .proj .top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+  .proj h3 { margin: 0; font: 700 1.05rem var(--display); letter-spacing: -.01em; word-break: break-word; }
+  .proj h3 a { color: var(--ink); text-decoration: none; }
+  .proj h3 a::after { content: ""; position: absolute; inset: 0; }
+  .proj { position: relative; transition: transform .15s, background .15s; }
+  .proj:hover, .proj:focus-within { background: #191c1f; transform: translateY(-2px); }
+  .proj:hover h3 a, .proj:focus-within h3 a { color: var(--c, var(--acid)); }
+  .proj p { margin: 0; font-size: 13.5px; color: #c4c9c2; flex: 1; }
+  .proj .spec { display: flex; justify-content: space-between; font: 500 11px var(--mono); color: var(--muted); letter-spacing: .06em; }
+  .proj .spec b { color: var(--c, var(--acid)); font-weight: 500; }
+
+  /* myyqii seq */
+  .myyqii { background: linear-gradient(160deg, #1c2112, #11140b 60%, #0d0f09); }
+  .myyqii .name { font: 700 clamp(3.2rem, 8vw, 6.4rem)/.85 var(--display); letter-spacing: -.06em; color: var(--acid); margin: 0 0 .5rem; text-shadow: 0 0 30px rgba(200,255,61,.25); }
+  .myyqii .soon { display: inline-flex; align-items: center; gap: .5rem; font: 700 11px var(--mono); letter-spacing: .2em; color: var(--acid); text-transform: uppercase; border: 1px solid rgba(200,255,61,.4); padding: .25rem .55rem; border-radius: 2px; margin-bottom: 1rem; }
+  .steps { display: grid; grid-template-columns: repeat(16, 1fr); gap: 5px; margin: 1.25rem 0 .5rem; }
+  .steps span { aspect-ratio: 1; border-radius: 2px; background: #1f2614; box-shadow: inset 0 0 0 1px rgba(200,255,61,.12); }
+  .steps span.gate { background: #3a4d14; }
+  .steps span.now { background: var(--acid); box-shadow: 0 0 10px var(--acid); }
+  .steps span.gate.now { background: #fff; box-shadow: 0 0 14px var(--acid); }
+  .rig { font: 500 12px/1.8 var(--mono); color: var(--muted); letter-spacing: .04em; }
+  .rig b { color: var(--ink); font-weight: 500; }
+  .cta { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1.25rem; }
+  .cta a { font: 700 13px var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; padding: .8rem 1.1rem; border-radius: 2px; border: 1px solid var(--acid); }
+  .cta a.primary { background: var(--acid); color: #000; }
+  .cta a:hover, .cta a:focus-visible { background: var(--ink); border-color: var(--ink); color: #000; }
+
+  /* contact */
+  .contact ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; }
+  .contact .jack { flex-direction: row; gap: .8rem; color: var(--ink); font: 500 14px var(--mono); }
+  .contact .jack small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+  .contact footer { margin-top: 2rem; font: 400 11px var(--mono); color: var(--muted); border-top: 1px solid rgba(255,255,255,.08); padding-top: .8rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+  /* cables */
+  #cables { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: visible; }
+  #cables path { fill: none; stroke-linecap: round; filter: drop-shadow(0 4px 3px rgba(0,0,0,.55)); }
+  #cables .plug { stroke: #000; stroke-width: 1; }
+  body.no-cables #cables { display: none; }
+  .cable-toggle { font: 500 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid rgba(255,255,255,.14); border-radius: 2px; padding: .25rem .5rem; cursor: pointer; }
+  .cable-toggle:hover { color: var(--acid); border-color: var(--acid); }
+
+  @media (max-width: 980px) {
+    .r1, .r2, .r3 { grid-template-columns: 1fr; }
+    .projects .grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .case { padding: 8px; width: calc(100% - 1rem); margin-top: .5rem; }
+    .mod { padding: 20px 16px 24px; }
+    .projects .grid { grid-template-columns: 1fr; }
+    .contact ul { grid-template-columns: 1fr; }
+    .steps { gap: 3px; }
+    #cables { opacity: .75; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  .about .q { margin: 1rem 0 0; padding: .8rem 1rem; background: #111315; border-left: 3px solid var(--orange); font-size: 1.05rem; }
+  .about .q cite { display: block; font: 500 10px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-style: normal; margin-top: .35rem; }
+</style>
+</head>
+<body>
+<div class="case" id="case">
+  <svg id="cables" aria-hidden="true"></svg>
+  <header>
+    <span class="pwr"><span class="led on" aria-hidden="true"></span>MS-84HP · Utrecht Modular Works · ±12V</span>
+    <nav aria-label="Sections"><a href="#about">About</a><a href="#projects">Projects</a><a href="#myyqii">MyyQii</a><a href="#contact">Contact</a><button class="cable-toggle" id="cableToggle" type="button" aria-pressed="true">Cables: on</button></nav>
+  </header>
+
+  <!-- ROW 1 -->
+  <div class="row"><div class="modules r1">
+    <section class="mod hero" aria-labelledby="h-hero">
+      <div class="mod-head"><span class="id">ID-1 · Identity Oscillator</span><span class="brand">42HP</span></div>
+      <h1 id="h-hero">Michael<br><span>Sorhaindo</span></h1>
+      <p class="lede">Senior software engineer, producer, and owner of more patch cables than a sensible adult needs. <em>Generates ideas at audio rate</em>, ships them at a slightly lower one.</p>
+      <div class="jackrow">
+        <span class="jack"><i></i><span class="silk">Utrecht</span></span>
+        <span class="jack"><i></i><span class="silk">Code</span></span>
+        <span class="jack"><i></i><span class="silk">Synths</span></span>
+        <span class="jack out" data-jack="hero-out"><i></i><span class="silk">Out →</span></span>
+      </div>
+    </section>
+
+    <section class="mod vco" aria-labelledby="h-vco">
+      <div class="mod-head"><span class="id">DRN-0 · Desk Drone</span><span class="brand">14HP</span></div>
+      <h2 id="h-vco" class="silk" style="font-size:10px;letter-spacing:.16em;margin-bottom:.6rem">Scope</h2>
+      <canvas class="scope" id="scope" width="600" height="220" aria-label="Oscilloscope showing the drone's waveform" role="img"></canvas>
+      <div class="knobs">
+        <div class="knob-wrap"><div class="knob c-acid" role="slider" tabindex="0" aria-label="Pitch" aria-valuemin="0" aria-valuemax="100" aria-valuenow="35" data-param="pitch"></div><span class="silk">Pitch</span></div>
+        <div class="knob-wrap"><div class="knob c-orange" role="slider" tabindex="0" aria-label="Cutoff" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" data-param="cutoff"></div><span class="silk">Cutoff</span></div>
+        <div class="knob-wrap"><div class="knob c-cyan" role="slider" tabindex="0" aria-label="Drift" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30" data-param="drift"></div><span class="silk">Drift</span></div>
+      </div>
+      <button class="pwr-btn" id="power" type="button" aria-pressed="false"><span>Drone: off (muted)</span><span class="led red" aria-hidden="true"></span></button>
+      <p class="hint">Drag, scroll or use arrow keys on the knobs. Sound only plays after you switch it on.</p>
+      <div class="jackrow" style="margin-top:1rem;justify-content:flex-end"><span class="jack out" data-jack="vco-out"><i></i><span class="silk">Audio out</span></span></div>
+    </section>
+  </div></div>
+
+  <!-- ROW 2 -->
+  <div class="row"><div class="modules r2">
+    <!-- ===== SWAP:ABOUT (career copy from LinkedIn) ===== -->
+    <section class="mod about" id="about" aria-labelledby="h-about">
+      <div class="mod-head"><span class="id">BIO-2 · Biography Filter</span><span class="brand">20HP</span></div>
+      <div class="jackrow" style="margin:0 0 1rem;justify-content:space-between"><span class="jack" data-jack="about-in"><i></i><span class="silk">In</span></span><span class="jack out" data-jack="about-out"><i></i><span class="silk">Out →</span></span></div>
+      <h2 id="h-about">About</h2>
+      <p>I'm a <strong>Senior Software Engineer at Elsevier</strong> (since 2020), working on SciVal, which currently involves AI and agentic smart summaries.</p>
+      <p>Signal path so far: Ash Gaming in London (Flash to HTML5, plus office fire marshal), Brandwatch in Brighton (JavaScript, a pattern library, an NLP/deep-learning reading group), then Ex Machina Group in Amsterdam (React mobile apps for EA and Twitch).</p>
+      <p>BSc Computer Science (Games), Brighton, First Class. MSc Advanced Computer Science, Sussex. I mentor at <strong>codebar.io</strong>, play church organ and occasional flute, and live in <strong>Utrecht</strong> with the cats.</p>
+      <blockquote class="q">"Always keen to learn new things."<cite>Daniel Triggs, my manager, 2015</cite></blockquote>
+      <div class="meters" aria-label="Levels (scientifically unmeasured)">
+        <div class="meter"><span class="silk">JavaScript</span><span class="bar" data-level="10"></span></div>
+        <div class="meter"><span class="silk">ML / NLP</span><span class="bar" data-level="8"></span></div>
+        <div class="meter"><span class="silk">Pipe organ</span><span class="bar" data-level="7"></span></div>
+        <div class="meter"><span class="silk">Synth GAS</span><span class="bar" data-level="12"></span></div>
+        <div class="meter"><span class="silk">Sleep</span><span class="bar" data-level="3"></span></div>
+      </div>
+    </section>
+    <!-- ===== /SWAP:ABOUT ===== -->
+
+    <section class="mod projects" id="projects" aria-labelledby="h-proj">
+      <div class="mod-head"><span class="id">PRJ-6 · Six-channel Project Mixer</span><span class="brand">40HP</span></div>
+      <div class="jackrow" style="margin:0 0 1rem;justify-content:space-between;align-items:center"><span class="jack" data-jack="proj-in"><i></i><span class="silk">In</span></span><h2 id="h-proj" style="margin:0">Projects</h2><span class="jack" data-jack="proj-cv"><i></i><span class="silk">CV in</span></span></div>
+      <div class="grid">
+        <article class="proj" style="--c:var(--acid)"><div class="top"><h3><a href="https://github.com/pmsorhaindo/reddit-mcp">reddit-mcp</a></h3><span class="led on" aria-hidden="true"></span></div><p>Read-only Reddit MCP connector on a Cloudflare Worker. Bearer passthrough: it never keeps your refresh token.</p><div class="spec"><b>TypeScript</b><span>2026</span></div></article>
+        <article class="proj" style="--c:var(--orange)"><div class="top"><h3><a href="https://github.com/pmsorhaindo/myyqii-site">myyqii-site</a></h3><span class="led on" aria-hidden="true"></span></div><p>Minimal landing page for the MyyQii artist brand. Static, dark, no build step.</p><div class="spec"><b>JavaScript</b><span>2026</span></div></article>
+        <article class="proj" style="--c:var(--cyan)"><div class="top"><h3><a href="https://github.com/pmsorhaindo/codex-session-viewer">codex-session-viewer</a></h3><span class="led on" aria-hidden="true"></span></div><p>Browser viewer for OpenAI Codex <code>.jsonl</code> session files. Reads the robot's diary.</p><div class="spec"><b>TypeScript</b><span>2025</span></div></article>
+        <article class="proj" style="--c:var(--pink)"><div class="top"><h3><a href="https://github.com/pmsorhaindo/pino-benchmark">pino-benchmark</a></h3><span class="led" aria-hidden="true"></span></div><p>Pino vs Winston under stress. Somebody had to measure the loggers.</p><div class="spec"><b>JavaScript</b><span>2025</span></div></article>
+        <article class="proj" style="--c:var(--acid)"><div class="top"><h3><a href="https://github.com/pmsorhaindo/functional-parser">functional-parser</a></h3><span class="led" aria-hidden="true"></span></div><p>The same functional parser in JavaScript and Haskell, for comparison and character building.</p><div class="spec"><b>HTML · 2★</b><span>2017</span></div></article>
+        <article class="proj" style="--c:var(--orange)"><div class="top"><h3><a href="https://github.com/pmsorhaindo/FruitMachine">FruitMachine</a></h3><span class="led" aria-hidden="true"></span></div><p>A slot machine in HTML5 and JS. Still the most-starred repo, which says something about something.</p><div class="spec"><b>JavaScript · 4★</b><span>2013</span></div></article>
+      </div>
+      <p class="hint" style="margin-top:1rem">Lit LEDs = pushed this year or last. <a href="https://github.com/pmsorhaindo?tab=repositories">All 94 public repos →</a></p>
+      <div class="jackrow" style="margin-top:.75rem"><span class="jack out" data-jack="proj-out"><i></i><span class="silk">Mix out</span></span></div>
+    </section>
+  </div></div>
+
+  <!-- ROW 3 -->
+  <div class="row"><div class="modules r3">
+    <section class="mod myyqii" id="myyqii" aria-labelledby="h-myyqii">
+      <div class="mod-head"><span class="id">MQ-16 · Teaser Sequencer</span><span class="brand">30HP</span></div>
+      <div class="jackrow" style="margin:0 0 1rem;gap:2rem;justify-content:flex-end"><span class="jack" data-jack="mq-audio"><i></i><span class="silk">Audio in</span></span><span class="jack" data-jack="mq-in"><i></i><span class="silk">Clock in</span></span><span class="jack out" data-jack="mq-out"><i></i><span class="silk">Out →</span></span></div>
+      <span class="soon"><span class="led on blink" aria-hidden="true"></span>Coming soon</span>
+      <h2 class="name" id="h-myyqii">MyyQii</h2>
+      <p>Electronic music from Utrecht. Patched on modular, sequenced on hardware, finished in Ableton.</p>
+      <div class="steps" id="steps" aria-hidden="true"></div>
+      <p class="rig"><b>Ableton</b> · <b>Eurorack modular</b> · <b>Hydrasynth</b> · <b>Elektron Octatrack</b></p>
+      <div class="cta">
+        <a class="primary" href="https://soundcloud.com/myyqii" target="_blank" rel="noopener noreferrer">▶ Listen</a>
+        <a href="https://myyqii.com" target="_blank" rel="noopener noreferrer">myyqii.com</a>
+      </div>
+    </section>
+
+    <section class="mod contact" id="contact" aria-labelledby="h-contact">
+      <div class="mod-head"><span class="id">IO-4 · Contact Breakout</span><span class="brand">12HP</span></div>
+      <div class="jackrow" style="margin:0 0 1rem"><span class="jack" data-jack="io-in"><i></i><span class="silk">In</span></span></div>
+      <h2 id="h-contact">Patch in</h2>
+      <ul>
+        <li><a class="jack out" href="https://github.com/pmsorhaindo"><i></i><span><small>Code</small>GitHub</span></a></li>
+        <li><a class="jack out" href="https://www.linkedin.com/in/pmsorhaindo"><i></i><span><small>Work</small>LinkedIn</span></a></li>
+        <li><a class="jack out" href="https://soundcloud.com/myyqii"><i></i><span><small>Sound</small>SoundCloud</span></a></li>
+        <li><a class="jack out" href="https://myyqii.com"><i></i><span><small>Artist</small>myyqii.com</span></a></li>
+      </ul>
+      <footer><span>© <span id="yr"></span> Michael Sorhaindo</span><span>Mind the ±12V.</span></footer>
+    </section>
+  </div></div>
+</div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // meters
+  document.querySelectorAll('.meter .bar').forEach(bar => {
+    const lvl = +bar.dataset.level;
+    for (let i = 0; i < 12; i++) { const b = document.createElement('b'); if (i < lvl) b.className = 'on' + (i >= 9 ? ' hot' : ''); bar.appendChild(b); }
+  });
+
+  // ---------- audio ----------
+  const params = { pitch: 35, cutoff: 40, drift: 30 };
+  let ctx, nodes = null, analyser;
+  const freqFor = v => 36.7 * Math.pow(2, (v / 100) * 2);           // D1 .. D3
+  const cutFor = v => 120 * Math.pow(2, (v / 100) * 5.5);            // 120 Hz .. ~5.4 kHz
+  const driftFor = v => 0.03 + (v / 100) * 0.6;
+  function start() {
+    ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+    ctx.resume();
+    const out = ctx.createGain(); out.gain.value = 0;
+    const filt = ctx.createBiquadFilter(); filt.type = 'lowpass'; filt.Q.value = 6; filt.frequency.value = cutFor(params.cutoff);
+    analyser = ctx.createAnalyser(); analyser.fftSize = 2048;
+    const f = freqFor(params.pitch);
+    const oscs = [0, 7, -5].map((det, i) => { const o = ctx.createOscillator(); o.type = i === 2 ? 'square' : 'sawtooth'; o.frequency.value = i === 2 ? f / 2 : f; o.detune.value = det; o.connect(filt); o.start(); return o; });
+    const lfo = ctx.createOscillator(); lfo.frequency.value = driftFor(params.drift);
+    const lfoAmt = ctx.createGain(); lfoAmt.gain.value = cutFor(params.cutoff) * 0.6;
+    lfo.connect(lfoAmt).connect(filt.frequency); lfo.start();
+    filt.connect(out); out.connect(analyser); analyser.connect(ctx.destination);
+    out.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 1.2);
+    nodes = { out, filt, oscs, lfo, lfoAmt };
+  }
+  function stop() {
+    if (!nodes) return;
+    const n = nodes; nodes = null;
+    n.out.gain.cancelScheduledValues(ctx.currentTime);
+    n.out.gain.setValueAtTime(n.out.gain.value, ctx.currentTime);
+    n.out.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+    setTimeout(() => { n.oscs.forEach(o => o.stop()); n.lfo.stop(); n.out.disconnect(); }, 500);
+  }
+  function apply() {
+    if (!nodes) return;
+    const t = ctx.currentTime, f = freqFor(params.pitch);
+    nodes.oscs.forEach((o, i) => o.frequency.setTargetAtTime(i === 2 ? f / 2 : f, t, 0.08));
+    nodes.filt.frequency.setTargetAtTime(cutFor(params.cutoff), t, 0.08);
+    nodes.lfoAmt.gain.setTargetAtTime(cutFor(params.cutoff) * 0.6, t, 0.1);
+    nodes.lfo.frequency.setTargetAtTime(driftFor(params.drift), t, 0.1);
+  }
+  function blip(freq) {
+    if (!nodes) return;
+    const o = ctx.createOscillator(), g = ctx.createGain(), t = ctx.currentTime;
+    o.type = 'sine'; o.frequency.value = freq; g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.08, t + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
+    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t + 0.3);
+  }
+  const power = document.getElementById('power');
+  power.addEventListener('click', () => {
+    const on = power.getAttribute('aria-pressed') !== 'true';
+    power.setAttribute('aria-pressed', on);
+    power.firstElementChild.textContent = on ? 'Drone: on (click to mute)' : 'Drone: off (muted)';
+    on ? start() : stop();
+  });
+  const scale = [293.66, 349.23, 392, 440, 523.25, 587.33];
+  document.querySelectorAll('.proj').forEach((p, i) => p.addEventListener('pointerenter', () => blip(scale[i % scale.length])));
+
+  // knobs
+  document.querySelectorAll('.knob').forEach(k => {
+    const key = k.dataset.param;
+    const set = v => { v = Math.max(0, Math.min(100, Math.round(v))); params[key] = v; k.setAttribute('aria-valuenow', v); k.style.setProperty('--rot', (-135 + v * 2.7) + 'deg'); apply(); };
+    set(+k.getAttribute('aria-valuenow'));
+    let y0, v0;
+    k.addEventListener('pointerdown', e => { y0 = e.clientY; v0 = params[key]; k.setPointerCapture(e.pointerId); });
+    k.addEventListener('pointermove', e => { if (y0 != null) set(v0 + (y0 - e.clientY) * 0.6); });
+    k.addEventListener('pointerup', () => y0 = null);
+    k.addEventListener('wheel', e => { e.preventDefault(); set(params[key] - Math.sign(e.deltaY) * 4); }, { passive: false });
+    k.addEventListener('keydown', e => {
+      const d = { ArrowUp: 5, ArrowRight: 5, ArrowDown: -5, ArrowLeft: -5, PageUp: 20, PageDown: -20 }[e.key];
+      if (d) { e.preventDefault(); set(params[key] + d); }
+      if (e.key === 'Home') set(0); if (e.key === 'End') set(100);
+    });
+  });
+
+  // scope
+  const cv = document.getElementById('scope'), g = cv.getContext('2d');
+  const buf = new Uint8Array(2048);
+  let phase = 0;
+  function draw() {
+    const w = cv.width, h = cv.height;
+    g.fillStyle = 'rgba(5,8,6,.55)'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = 'rgba(200,255,61,.08)'; g.lineWidth = 1;
+    for (let x = 0; x < w; x += w / 10) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+    for (let y = 0; y < h; y += h / 4) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+    g.strokeStyle = '#c8ff3d'; g.lineWidth = 2.5; g.shadowColor = '#c8ff3d'; g.shadowBlur = 8; g.beginPath();
+    if (nodes && analyser) {
+      analyser.getByteTimeDomainData(buf);
+      for (let i = 0; i < w; i++) { const v = buf[Math.floor(i / w * 1024)] / 128 - 1; const y = h / 2 + v * h * 0.42; i ? g.lineTo(i, y) : g.moveTo(i, y); }
+    } else {
+      // idle: preview of the patch, a lazy filtered saw
+      phase += 0.012;
+      const cyc = 1.5 + params.pitch / 30, sharp = 0.15 + params.cutoff / 120;
+      for (let i = 0; i < w; i++) {
+        const t = (i / w) * cyc + phase; const saw = (t % 1) * 2 - 1;
+        const v = (Math.sin(t * Math.PI * 2) * (1 - sharp) + saw * sharp) * (0.25 + 0.08 * Math.sin(phase * (1 + params.drift / 20)));
+        const y = h / 2 + v * h * 0.8; i ? g.lineTo(i, y) : g.moveTo(i, y);
+      }
+    }
+    g.stroke(); g.shadowBlur = 0;
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  draw();
+
+  // sequencer
+  const steps = document.getElementById('steps');
+  const pattern = [1,0,0,1, 0,0,1,0, 1,0,0,1, 0,1,0,0];
+  const cells = pattern.map(p => { const s = document.createElement('span'); if (p) s.className = 'gate'; steps.appendChild(s); return s; });
+  let step = 0;
+  if (!reduce) setInterval(() => { cells.forEach(c => c.classList.remove('now')); cells[step].classList.add('now'); step = (step + 1) % 16; }, 60000 / 128 / 4 * 2);
+
+  // patch cables
+  const svg = document.getElementById('cables'), caseEl = document.getElementById('case');
+  const patches = [['hero-out', 'about-in', '#ff7a1a'], ['about-out', 'proj-in', '#3fe0ff'], ['vco-out', 'proj-cv', '#c8ff3d'], ['proj-out', 'mq-in', '#ff4fa3'], ['mq-out', 'io-in', '#ffd400']];
+  const ns = 'http://www.w3.org/2000/svg';
+  function center(id) {
+    const el = document.querySelector(`[data-jack="${id}"] i`); if (!el) return null;
+    const r = el.getBoundingClientRect(), c = caseEl.getBoundingClientRect();
+    return { x: r.left - c.left + r.width / 2, y: r.top - c.top + r.height / 2 };
+  }
+  function drawCables() {
+    svg.innerHTML = '';
+    patches.forEach(([a, b, col]) => {
+      const p = center(a), q = center(b); if (!p || !q) return;
+      const dist = Math.hypot(q.x - p.x, q.y - p.y);
+      // single-column layouts: only draw short hops so cables never blanket the copy
+      if (innerWidth <= 980 && dist > 240) return;
+      const sag = Math.min(120, 30 + dist * 0.22);
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', `M${p.x},${p.y} C${p.x},${p.y + sag} ${q.x},${q.y + sag} ${q.x},${q.y}`);
+      path.setAttribute('stroke', col); path.setAttribute('stroke-width', '5'); path.setAttribute('opacity', '.9');
+      svg.appendChild(path);
+      [p, q].forEach(pt => { const c = document.createElementNS(ns, 'circle'); c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); c.setAttribute('r', 8); c.setAttribute('fill', col); c.setAttribute('class', 'plug'); svg.appendChild(c); });
+    });
+  }
+  addEventListener('resize', drawCables);
+  document.fonts && document.fonts.ready.then(drawCables);
+  addEventListener('load', drawCables);
+  drawCables();
+  const ct = document.getElementById('cableToggle');
+  ct.addEventListener('click', () => { const on = document.body.classList.toggle('no-cables'); ct.setAttribute('aria-pressed', !on); ct.textContent = 'Cables: ' + (on ? 'off' : 'on'); });
+})();
+</script>
+<nav aria-label="Prototype switcher" style="position:fixed;right:12px;bottom:12px;z-index:9999;display:flex;gap:2px;align-items:center;font:500 12px/1 ui-monospace,Menlo,monospace;background:rgba(0,0,0,.82);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:4px 4px 4px 10px;backdrop-filter:blur(6px)"><span style="color:#aaa;margin-right:4px">proto</span><a href="/proto01/" style="color:#fff;text-decoration:none;padding:5px 9px;border-radius:999px" title="A · Control room">01</a><a href="/proto02/" style="color:#fff;text-decoration:none;padding:5px 9px;border-radius:999px" title="B · Rave flyer">02</a><a href="/proto03/" aria-current="page" style="background:#fff;color:#000;text-decoration:none;padding:5px 9px;border-radius:999px" title="C · Modular rack">03</a></nav>
+</body>
+</html>
