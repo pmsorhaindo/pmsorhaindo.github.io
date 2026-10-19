@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Safety nets for refactoring multi-stage LLM pipelines</title>
+<style>
+:root{--fg:#1d2330;--muted:#5b6475;--bg:#fff;--accent:#2457c5;--code:#f4f6fa;--line:#e3e7ee}
+@media (prefers-color-scheme:dark){:root{--fg:#e6e9ef;--muted:#9aa3b5;--bg:#12151c;--accent:#7ea6ff;--code:#1c212b;--line:#2a303c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:860px;margin:0 auto;padding:48px 22px 80px}
+h1{font-size:2rem;line-height:1.25;margin:0 0 .4em}
+h2{font-size:1.4rem;margin-top:2.4em;padding-top:.6em;border-top:1px solid var(--line)}
+h3{font-size:1.1rem;margin-top:1.8em}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+p,li{color:var(--fg)}em{color:var(--muted)}
+code{font:0.88em/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);padding:.1em .35em;border-radius:4px}
+pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow-x:auto;border:1px solid var(--line)}
+pre code{padding:0;background:none;font-size:.85em}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.92em;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--code)}
+hr{border:0;border-top:1px solid var(--line);margin:2.4em 0}
+.download{display:inline-block;margin:.6em 0 1.4em;padding:10px 16px;border-radius:8px;background:var(--accent);color:#fff!important;font-weight:600}
+footer{margin-top:4em;color:var(--muted);font-size:.85em}
+</style>
+</head>
+<body>
+<main>
+<h1 id="safety-nets-for-refactoring-multi-stage-llm-pipelines">Safety nets for refactoring multi-stage LLM pipelines</h1>
+<p><em>An overnight lab note, October 2026. It comes with a small runnable toolkit,
+<a href="llm-pipeline-safety-kit.zip"><code>llm-pipeline-safety-kit</code></a> (Python, MIT, 57 passing tests, runs offline).</em></p>
+<h2 id="tldr">TL;DR</h2>
+<p>A typical "answer questions about this data" assistant is a chain of LLM stages: a <strong>guardrail</strong>, a
+<strong>feasibility</strong> check, <strong>intent</strong> classification, a <strong>summariser</strong> checked by an <strong>evaluator</strong> with retries, a
+<strong>style</strong> pass that streams tokens, and <strong>follow-up suggestions</strong>. Refactoring that chain, or just editing its
+prompts, breaks things in three predictable ways:</p>
+<ol>
+<li><strong>Vocabulary drift.</strong> The same stage has a graph node id, a prompt-store key, a code constant, event names and
+   front-end handlers. A rename that misses one layer often fails <em>silently</em>, for example a prompt lookup that falls
+   back to a default.</li>
+<li><strong>Quality regressions.</strong> A prompt or model change makes answers subtly worse, most dangerously by inventing
+   numbers. An evaluator that never sees the source data cannot catch that.</li>
+<li><strong>Behaviour drift in the stream.</strong> Moving orchestration code changes the order, names or payloads of the events
+   the client depends on, and the change is invisible until a user sees it.</li>
+</ol>
+<p>The kit has one cheap, offline check for each problem: a <strong>stage contract</strong>, <strong>golden-case evals</strong> with a
+deterministic numbers-grounding check, and <strong>event-stream snapshot tests</strong>. Adopt them in this order:
+<strong>characterise → contract → golden evals → refactor</strong>.</p>
+<p><a class="download" href="llm-pipeline-safety-kit.zip">Download llm-pipeline-safety-kit.zip</a></p><hr />
+<h2 id="1-why-these-three-safety-nets">1. Why these three safety nets</h2>
+<table>
+<thead>
+<tr>
+<th>Net</th>
+<th>Protects against</th>
+<th>Why it's cheap</th>
+<th>Why a normal unit test isn't enough</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Characterization snapshot</strong> of the event stream</td>
+<td>Accidental behaviour change while moving code</td>
+<td>Records what the system does <em>today</em>, so you don't have to write a spec first</td>
+<td>Unit tests check pieces; the client depends on the <em>sequence</em> of events</td>
+</tr>
+<tr>
+<td><strong>Stage contract</strong> (one YAML file)</td>
+<td>Renames that miss a layer; dead or stale prompt keys; client handlers for events that no longer exist</td>
+<td>Static: parses files, no runtime needed, runs in milliseconds</td>
+<td>Identifiers live in different languages and stores that no single test suite covers</td>
+</tr>
+<tr>
+<td><strong>Golden-case evals</strong></td>
+<td>Prompt and model regressions; a lenient evaluator; wrong retry or fallback paths</td>
+<td>Deterministic checks plus recorded LLM responses mean no API calls in CI</td>
+<td>LLM output is not exactly reproducible, so you assert <em>properties</em> instead of strings</td>
+</tr>
+</tbody>
+</table>
+<p>These nets are layered. The snapshot says <em>what</em> changed in the stream. The contract says <em>which layer</em> is out
+of step. The evals say whether the <em>answers</em> are still acceptable. None of them needs a real model call to run in
+CI, which is what makes them stick in a team that is busy shipping.</p>
+<h3 id="the-one-check-worth-stealing-even-if-you-take-nothing-else">The one check worth stealing even if you take nothing else</h3>
+<p><code>numbers_grounded</code>: extract every number in the answer (<code>€1.25M</code>, <code>1,250,000</code>, <code>3.1%</code>, <code>480k</code>) and require each
+one to match a value in the input at the precision written, or a simple derivation of input values (difference,
+percent change, ratio, total). It is deterministic, takes about 100 lines and catches the most damaging failure of a
+data summariser. Put it <strong>inside the evaluator stage</strong> as well as in the evals, so a lenient evaluator model can't
+wave a hallucinated total through. One of the bundled golden cases proves exactly that: the evaluator model is
+scripted to say "looks great", and the candidate is still rejected.</p>
+<p>One more lesson from the demo: the <strong>style</strong> pass runs <em>after</em> the evaluator. If it rewrites numbers, nothing
+downstream notices. The <code>demo_failures</code> suite shows this case. Either re-check grounding after styling, or make the
+style prompt structurally unable to change numbers, for example by masking them as placeholders before the pass and
+restoring them afterwards.</p>
+<hr />
+<h2 id="2-adopting-them-in-a-legacy-codebase-strangler-order">2. Adopting them in a legacy codebase (strangler order)</h2>
+<p>The aim is to put nets under the code <em>before</em> you move it, starting with the net that needs the least
+understanding of the code.</p>
+<h3 id="step-0-inventory-half-a-day">Step 0: Inventory (half a day)</h3>
+<p>List every identifier each stage is known by, in every layer: config/graph files, prompt rows (per environment),
+code constants and enums, emitted event names, front-end handlers, analytics and alerting strings, and anything
+<em>persisted</em> (stored conversation metadata, event logs). That table is the first draft of your contract.</p>
+<h3 id="step-1-characterise-12-days">Step 1: Characterise (1–2 days)</h3>
+<ul>
+<li>Capture real streams for 5–10 representative requests (happy path, retry, blocked, infeasible, a follow-up turn).
+  If the orchestrator can't be called from a test, <code>curl -N</code> the endpoint against a fake or recorded model and save
+  the raw SSE.</li>
+<li>Normalise away what legitimately varies (ids, timestamps, durations, token chunking) and commit the snapshots.</li>
+<li>Make the LLM client injectable if it isn't already. This is the single most valuable seam in the codebase.</li>
+<li><strong>Don't fix anything yet.</strong> If a snapshot captures a bug, leave it and write it down. Characterization tests pin
+  current behaviour, not correct behaviour (Feathers).</li>
+</ul>
+<h3 id="step-2-contract-1-day">Step 2: Contract (1 day)</h3>
+<ul>
+<li>Write <code>contract.yaml</code> from the inventory. Point sources at the real files.</li>
+<li>Start lenient: use <code>mode: within</code> for consumers (clients only listen for known events) and <code>covers</code> for stores
+  (extra legacy prompt rows are allowed). Fix or document every finding, then <strong>tighten to <code>exact</code></strong>.</li>
+<li>Export prompt-store keys from <strong>each environment</strong> and check them too. Environments drift apart more than code does.</li>
+<li>Add it to CI. From now on every rename touches the contract first, and CI tells you which layers you missed.</li>
+</ul>
+<h3 id="step-3-golden-evals-ongoing">Step 3: Golden evals (ongoing)</h3>
+<ul>
+<li>Seed with the snapshot scenarios plus one case per <strong>past incident</strong>. Every bug report becomes a case.</li>
+<li>Use recorded responses per stage to force the paths that are hard to trigger: evaluator rejects then accepts,
+  three rejections then fallback, guardrail blocks.</li>
+<li>Prefer deterministic assertions (grounded numbers, word budget, required entities, verdicts, attempt counts).
+  Add an LLM judge only for qualities you can't express otherwise, and calibrate it against your own labels first
+  (Shankar et al.).</li>
+<li>Run two tiers: an <strong>offline gate</strong> on every PR (fake or recorded LLM, must pass), and a <strong>nightly live run</strong> against
+  the real model that reports pass rates over N repeats instead of blocking.</li>
+</ul>
+<h3 id="step-4-refactor-behind-the-nets">Step 4: Refactor behind the nets</h3>
+<ul>
+<li>Make small extractions. After each one, snapshots, contract and evals must all stay green.</li>
+<li>For renames of anything <strong>persisted or shared across services</strong>, use <em>parallel change</em> (expand → migrate →
+  contract). Emit or accept both names, migrate the consumers, then remove the old name. The contract can hold both
+  names during the transition (<code>events: [suggestions_ready, suggestions_generated]</code>) with a note.</li>
+<li>For bigger moves, run the new orchestrator <strong>next to</strong> the old one (strangler fig): send shadow traffic, compare
+  normalised streams with the same snapshot normaliser, then switch over one page or use-case at a time.</li>
+<li>Only re-record a snapshot when the diff is the change you meant to make, and say so in the PR.</li>
+</ul>
+<hr />
+<h2 id="3-naming-and-ubiquitous-language">3. Naming and ubiquitous language</h2>
+<p>Most pipeline drift starts as a naming problem. Some rules that pay off:</p>
+<ol>
+<li><strong>One concept, one name, in every layer.</strong> If the stage is <code>summarise</code>, the node id, prompt key, enum, metric
+   label and event prefix should all be recognisably <code>summarise</code>. Pick a spelling (UK/US) and let the contract
+   enforce it. <code>summarise</code>/<code>summarize</code> drift is a real and common bug.</li>
+<li><strong>The contract file is the glossary.</strong> Give every stage a one-line description and add the forbidden synonyms as
+   comments. Code review then has something concrete to point at.</li>
+<li><strong>Names that are persisted are API.</strong> Event names written to a conversation store, prompt keys in a database and
+   analytics event names outlive the code. Rename them only with read-both or write-both migrations.</li>
+<li><strong>Name by role, not by history.</strong> If the "override" prompt is the one always used, it is the prompt and not an
+   override. If a field called <code>history</code> only holds user messages, call it <code>user_messages</code>, or carry roles explicitly.
+   Misleading names cause real bugs, not just confusion.</li>
+<li><strong>One verdict shape for every check stage.</strong> Use <code>{passed: bool, reason: str}</code> for guardrail, feasibility and
+   evaluator alike. Mixing <code>feasible</code>, <code>ok</code>, <code>valid</code> and <code>safe</code> invites inverted-boolean bugs.</li>
+<li><strong>Don't reuse safety words for non-safety outcomes.</strong> A parse failure isn't "unsafe". Keep <code>blocked</code>,
+   <code>infeasible</code> and <code>fallback</code> as distinct statuses, so dashboards and alerts mean what they say.</li>
+<li><strong>Namespace events by origin.</strong> If two services emit events into one stream, give each a prefix, so a reader
+   knows who to blame and a grep finds the producer.</li>
+<li><strong>Avoid overloaded product words in code.</strong> Words like <em>dashboard</em>, <em>summary</em> or <em>report</em> often mean a page, a
+   feature, a stage and a stored artefact all at once. Give each meaning its own term in the glossary.</li>
+<li><strong>Graph node ids are implementation details.</strong> Don't let callers outside the orchestrator depend on them. Expose
+   stage names instead, and map them inside.</li>
+</ol>
+<hr />
+<h2 id="4-reading-list">4. Reading list</h2>
+<p>All links checked on 18 Oct 2026.</p>
+<p><strong>Legacy code and safe change</strong>
+* Michael Feathers, <a href="https://michaelfeathers.silvrback.com/characterization-testing" rel="noopener">Characterization Testing</a>,
+  the idea behind snapshotting current behaviour before you change it.
+* <a href="https://en.wikipedia.org/wiki/Characterization_test" rel="noopener">Characterization test (Wikipedia)</a>, a short definition with references.
+* Martin Fowler, <a href="https://martinfowler.com/bliki/StranglerFigApplication.html" rel="noopener">Strangler Fig Application</a>.
+* Danilo Sato, <a href="https://martinfowler.com/bliki/ParallelChange.html" rel="noopener">Parallel Change</a> (on martinfowler.com), the
+  expand/migrate/contract pattern for renames.
+* <a href="https://approvaltests.com/" rel="noopener">Approval Tests</a> and <a href="https://github.com/syrupy-project/syrupy" rel="noopener">syrupy</a>, mature snapshot
+  testing libraries.</p>
+<p><strong>Contracts and language</strong>
+* Martin Fowler, <a href="https://martinfowler.com/bliki/UbiquitousLanguage.html" rel="noopener">Ubiquitous Language</a>.
+* Eric Evans, <a href="https://www.domainlanguage.com/ddd/reference/" rel="noopener">DDD Reference</a> (free PDF).
+* Ian Robinson, <a href="https://martinfowler.com/articles/consumerDrivenContracts.html" rel="noopener">Consumer-Driven Contracts</a>, and
+  <a href="https://pact.io/" rel="noopener">Pact</a> for cross-service contracts.</p>
+<p><strong>Evaluating LLM features</strong>
+* Hamel Husain, <a href="https://hamel.dev/blog/posts/evals/" rel="noopener">Your AI Product Needs Evals</a>.
+* Eugene Yan, <a href="https://eugeneyan.com/writing/evals/" rel="noopener">Task-Specific LLM Evals that Do &amp; Don't Work</a>.
+* Zheng et al., <a href="https://arxiv.org/abs/2306.05685" rel="noopener">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</a>,
+  covering judge biases and agreement.
+* Shankar et al., <a href="https://arxiv.org/abs/2404.12272" rel="noopener">Who Validates the Validators?</a>, on aligning LLM judges with
+  human preferences.
+* Anthropic, <a href="https://www.anthropic.com/research/building-effective-agents" rel="noopener">Building Effective Agents</a>, which covers
+  prompt chaining and evaluator–optimizer loops (the retry pattern above).
+* <a href="https://www.promptfoo.dev/docs/intro/" rel="noopener">promptfoo</a>, an off-the-shelf eval runner, if you outgrow this kit.</p>
+<p><strong>Specs</strong>
+* WHATWG HTML, <a href="https://html.spec.whatwg.org/multipage/server-sent-events.html" rel="noopener">Server-sent events</a>, the parsing rules
+  the snapshot helper follows.
+* pytest, <a href="https://docs.pytest.org/en/stable/how-to/writing_plugins.html" rel="noopener">Writing plugins</a>.</p>
+<hr />
+<h2 id="5-the-toolkit">5. The toolkit</h2>
+<p><a href="llm-pipeline-safety-kit.zip"><code>llm-pipeline-safety-kit.zip</code></a>. Requires Python ≥ 3.9 and PyYAML.</p>
+<pre><code class="language-bash">pip install -e &quot;.[test]&quot;
+pytest -q                                              # 57 passed
+psk contract examples/sales_assistant/contract.yaml    # finds the 4 planted drifts, exit 1
+psk eval examples/sales_assistant/golden               # 10/10 golden cases, exit 0
+psk eval examples/demo_failures                        # shows failure output, exit 1
+psk sse compare examples/sales_assistant/capture.sse examples/sales_assistant/snapshots/capture.json
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contract.py</code></td>
+<td>YAML source of truth; <code>structured</code> / <code>regex</code> / <code>lines</code> sources; <code>exact</code> / <code>covers</code> / <code>within</code> modes; "did you mean" hints</td>
+</tr>
+<tr>
+<td><code>evals.py</code></td>
+<td>YAML golden cases, scripted per-stage LLM responses, built-in and custom checks, LLM-judge hook, table / markdown / JSON / JUnit reports, exit codes 0/1/2</td>
+</tr>
+<tr>
+<td><code>numbers.py</code></td>
+<td>Number extraction and grounding with rounding, %, k/M/B and derived values</td>
+</tr>
+<tr>
+<td><code>sse.py</code> + pytest plugin</td>
+<td>SSE parse and format, normaliser, <code>sse_snapshot</code> fixture, <code>--update-snapshots</code></td>
+</tr>
+<tr>
+<td><code>llm.py</code></td>
+<td><code>FakeLLM</code>, record/replay <code>CassetteLLM</code>, optional OpenAI-compatible client via <code>PSK_LLM_*</code> env vars</td>
+</tr>
+<tr>
+<td><code>demo_pipeline.py</code></td>
+<td>A reference six-stage pipeline (sales dashboard assistant) to run the examples against</td>
+</tr>
+</tbody>
+</table>
+<p>Known limits: derived-number matching trades strictness for fewer false alarms, so turn it off
+(<code>allow_derived: false</code>) for high-stakes figures. The contract checker matches identifiers, not semantics. The demo
+pipeline is deliberately simple and is not a framework.</p>
+<footer>Lab note &middot; October 2026 &middot; toolkit released under the MIT licence.</footer>
+</main>
+</body>
+</html>
