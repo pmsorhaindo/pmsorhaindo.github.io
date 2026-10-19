@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Performing hardware jams: a live-arrangement playbook (OXI One · Octatrack MKII · Hydrasynth)</title>
+<style>
+:root{--fg:#1d1d1f;--muted:#666;--bg:#fff;--accent:#3b5bdb;--line:#e3e3e8;--code:#f4f4f7}
+@media (prefers-color-scheme:dark){:root{--fg:#e8e8ea;--muted:#a0a0a8;--bg:#141416;--accent:#8aa2ff;--line:#2c2c31;--code:#1f1f24}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:980px;margin:0 auto;padding:2rem 1.25rem 4rem}
+h1{font-size:2rem;line-height:1.2;margin:.2em 0 .4em}
+h2{margin-top:2.4rem;padding-top:.6rem;border-top:1px solid var(--line)}
+h3{margin-top:1.6rem}
+a{color:var(--accent)}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:.4rem .55rem;vertical-align:top;text-align:left}
+th{background:var(--code)}
+code{background:var(--code);padding:.1em .35em;border-radius:4px;font-size:.9em}
+pre{background:var(--code);padding:1rem;border-radius:8px;overflow-x:auto}
+pre code{background:none;padding:0}
+blockquote{margin:1rem 0;padding:.6rem 1rem;border-left:4px solid var(--accent);background:var(--code);border-radius:0 6px 6px 0}
+blockquote p{margin:.2rem 0}
+hr{border:0;border-top:1px solid var(--line);margin:2rem 0}
+li.task{list-style:none;margin-left:-1.2rem}
+@media print{body{font-size:11pt}main{max-width:none;padding:0}a{color:inherit}}
+</style>
+</head>
+<body>
+<main>
+<h1>Performing hardware jams: a live-arrangement playbook</h1>
+<p><strong>OXI One MKII + Elektron Octatrack MKII + ASM Hydrasynth Desktop (+ optional Ableton Live 12)</strong></p>
+<p><em>Last checked: 18 Oct 2026. Every button combo here was checked against the official manuals listed below. Anything I couldn't confirm in a manual is marked <strong>(unverified)</strong>. Test those on your own rig before a show.</em></p>
+<hr />
+<h2>Sources (official manuals)</h2>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Document</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OXI One MKII</td>
+<td><a href="https://soundium.lt/cdn/shop/files/OXI_ONE_MKII_User_Manual_EN.pdf">OXI ONE MKII User Manual (EN)</a></td>
+<td>v2.0a</td>
+</tr>
+<tr>
+<td>Octatrack MKII</td>
+<td><a href="https://www.elektron.se/wp-content/uploads/2026/08/Octatrack-MKII-User-Manual_ENG_OS1.40C_260827.pdf">Octatrack MKII User Manual</a> (<a href="https://www.elektron.se/support-downloads/octatrack-mkii">support page</a>)</td>
+<td>OS 1.40C, 27 Aug 2026</td>
+</tr>
+<tr>
+<td>Hydrasynth Desktop</td>
+<td><a href="https://www.mecldata.com/download/asm/Hydrasynth_KB_DR_Owners_Manual_2.2.0.pdf">Hydrasynth Keyboard / Desktop Owner's Manual 2.2.0</a> (linked from <a href="https://www.ashunsoundmachines.com/downloads">ASM downloads</a>)</td>
+<td>2.2.0</td>
+</tr>
+<tr>
+<td>Ableton Live 12</td>
+<td><a href="https://www.ableton.com/en/live-manual/12/clip-view/">Clip View, 8.3.2 Bank/Program</a> · <a href="https://www.ableton.com/en/live-manual/12/synchronizing-with-link-tempo-follower-and-midi/">Synchronizing, Sync Delay</a></td>
+<td>Live 12</td>
+</tr>
+</tbody>
+</table>
+<p>Citations below look like <strong>[OXI p.225]</strong>, <strong>[OT §10.2]</strong> or <strong>[HS p.102]</strong>. Page numbers are the printed page numbers in each manual.</p>
+<hr />
+<h2>0. The core idea in one paragraph</h2>
+<p>A jam turns into a performable song once <strong>each section of the song is one pattern on every device</strong>, and <strong>one action moves every device to its next section together</strong>. The OXI One is the natural "conductor". Each song section becomes an <strong>arranger slot (column)</strong>. A slot can send a <strong>Program Change (PC)</strong> on each sequencer's MIDI channel 2 clock ticks before the transition [OXI p.225, p.232]. One sequencer lane can point at the Octatrack's PC-receive channel, which changes OT patterns [OT §8.7.2, p.40]. The chord lane's PC changes the Hydrasynth patch [HS p.102]. Scenes and the crossfader on the OT, plus macros on the Hydrasynth, handle the <em>movement inside</em> a section.</p>
+<hr />
+<h2>1. OXI One MKII: organizing a song into sections</h2>
+<h3>1.1 Structure you're working with</h3>
+<ul>
+<li><strong>Project</strong>: holds all sequencer data. There are <strong>20 on-board project slots</strong>, and more fit on microSD. The last autosaved project loads on power-up [OXI p.11].</li>
+<li><strong>Patterns</strong>: <strong>16 per sequencer</strong> across 8 sequencers [OXI p.88].</li>
+<li><strong>Songs</strong>: <strong>4 per project</strong>, built in the arranger. <em>Songs can't be renamed.</em> Saving a song saves the project [OXI p.221, p.225].</li>
+<li><strong>Arranger grid</strong>: rows are sequencer lanes 1–8, columns are slots (song sections). There are up to <strong>32 slots</strong> [OXI p.224].</li>
+</ul>
+<h3>1.2 Saving, naming and duplicating (do this constantly)</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Combo</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quick save project to current slot</td>
+<td>Hold <strong>[Shift] + [Save]</strong></td>
+<td>[OXI p.11, p.278]</td>
+</tr>
+<tr>
+<td>Save to a chosen slot</td>
+<td><strong>[Save]</strong> → turn <strong>Knob 1</strong> → press Knob 1 → "Save Project" → press Knob 1</td>
+<td>[OXI p.11]</td>
+</tr>
+<tr>
+<td>Rename project</td>
+<td><strong>[Save]</strong> → Knob 1 to the <em>Loaded</em> slot → press → "Rename" → editor (K1 picks the character, K2 moves the cursor/backspace, K4 confirms)</td>
+<td>[OXI p.12]</td>
+</tr>
+<tr>
+<td>Duplicate project to a new slot (a "show copy")</td>
+<td><strong>[Save]</strong> → Knob 1 to an empty slot → press → "Duplic proj here" → Yes</td>
+<td>[OXI p.13]</td>
+</tr>
+<tr>
+<td>Project menu (reload project, rename pattern, quantize settings)</td>
+<td>Hold <strong>[Shift] + [Perf]</strong></td>
+<td>[OXI p.14]</td>
+</tr>
+<tr>
+<td>Load a project</td>
+<td><strong>[Load]</strong> → Knob 1 → press → press</td>
+<td>[OXI p.11]</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 Patterns: save, copy, rename, load</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Combo</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save current pattern to a slot</td>
+<td><strong>[Save]</strong> → turn <strong>Knob 2</strong> → press → "Save pattern" → press. Or <strong>double-tap</strong> the pad in the save grid</td>
+<td>[OXI p.90]</td>
+</tr>
+<tr>
+<td>Save a <em>copy</em> of the current pattern (make a variation)</td>
+<td><strong>[Save]</strong> → Knob 2 to a <em>different</em> slot → "Save patt here as copy"</td>
+<td>[OXI p.90]</td>
+</tr>
+<tr>
+<td>Copy / paste a pattern slot</td>
+<td>In the Load or Save menu: <strong>[Copy] + [Pad]</strong>, then <strong>[Paste] + [Pad]</strong></td>
+<td>[OXI p.278]</td>
+</tr>
+<tr>
+<td>Rename a pattern</td>
+<td><strong>[Save]</strong> → Knob 2 → press → "Rename"</td>
+<td>[OXI p.92]</td>
+</tr>
+<tr>
+<td>Load a pattern</td>
+<td><strong>[Load]</strong> → tap the pad (the change happens at load quantization while running)</td>
+<td>[OXI p.88]</td>
+</tr>
+<tr>
+<td>Load a whole column of patterns (all seqs)</td>
+<td>In Load: <strong>[Shift] + tap [Pad]</strong></td>
+<td>[OXI p.89]</td>
+</tr>
+<tr>
+<td>Revert pattern to its last saved state</td>
+<td><strong>[Shift] + [Load]</strong></td>
+<td>[OXI p.88]</td>
+</tr>
+<tr>
+<td>Duplicate steps to the next page (8 bars → 16 bars)</td>
+<td><strong>[Shift] + [Copy]</strong></td>
+<td>[OXI p.7, quick ref]</td>
+</tr>
+<tr>
+<td>Snapshot before a risky live tweak / restore</td>
+<td><strong>[Load] + [Save]</strong> captures. <strong>[Load]</strong> or <strong>[Undo]</strong> restores</td>
+<td>[OXI quick ref p.278]</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Naming convention tip:</strong> use pattern slots <em>by section</em> across sequencers. Slot 1 = Intro, 2 = A, 3 = B, 4 = Build, 5 = Peak, 6 = Breakdown, 7 = Outro, 8 = spare. Then <strong>[Shift] + pad</strong> in the Load grid recalls a whole section at once, and the arranger columns line up with the same numbers.</p>
+</blockquote>
+<h3>1.4 Arranger (song mode)</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Combo</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open the arranger (edit only)</td>
+<td><strong>[Arranger]</strong></td>
+<td>[OXI p.224]</td>
+</tr>
+<tr>
+<td>Arm/disarm song playback</td>
+<td><strong>[Shift] + [Arranger]</strong> (lit blue when armed). It <strong>auto-disarms on Stop</strong></td>
+<td>[OXI p.229]</td>
+</tr>
+<tr>
+<td>Assign patterns</td>
+<td>In arranger, <strong>[Page]</strong> opens the pattern grid. Tap patterns to append them</td>
+<td>[OXI p.226]</td>
+</tr>
+<tr>
+<td>Create a full slot column from the current patterns</td>
+<td>Hold <strong>[Arranger] + tap a column [Pad]</strong></td>
+<td>[OXI p.226]</td>
+</tr>
+<tr>
+<td>Edit slot (PC / Bank / Pattern / Repeats / Next)</td>
+<td><strong>Hold the slot [Pad]</strong></td>
+<td>[OXI p.225, p.227]</td>
+</tr>
+<tr>
+<td>Repeats: toggle 1 ↔ ∞</td>
+<td>Hold <strong>[Pad] + tap Knob 4</strong>. Turn for 1–19</td>
+<td>[OXI p.227]</td>
+</tr>
+<tr>
+<td>Next-slot behaviour (next / prev / 1st / random / other)</td>
+<td>Hold <strong>[Pad] + Knob 1</strong></td>
+<td>[OXI p.228]</td>
+</tr>
+<tr>
+<td>Save song / load song</td>
+<td>In arranger: tap <strong>Knob 2</strong> → turn → tap. Tap <strong>Knob 1</strong> → turn → tap</td>
+<td>[OXI p.225]</td>
+</tr>
+<tr>
+<td>Launch one slot / whole column live</td>
+<td>Tap <strong>[Pad]</strong>. <strong>[Shift] + tap [Pad]</strong> cues the full column</td>
+<td>[OXI p.230]</td>
+</tr>
+<tr>
+<td>Master lane (one lane drives all)</td>
+<td>Turn <strong>Knob 3</strong> (M:OFF → S1–S8). Double-tap resets</td>
+<td>[OXI p.231]</td>
+</tr>
+<tr>
+<td>Override a pattern while the song plays</td>
+<td>Hold <strong>[Load] + [Pad]</strong></td>
+<td>[OXI p.231]</td>
+</tr>
+<tr>
+<td>Copy / paste / move a slot</td>
+<td><strong>[Copy]+[Pad]</strong>, <strong>[Paste]+[Pad]</strong>. Hold <strong>[Pad] + Page [64]/[16]</strong> moves it right/left</td>
+<td>[OXI p.233]</td>
+</tr>
+<tr>
+<td>Clear song</td>
+<td><strong>[Shift] + [Paste]</strong> (undo is available)</td>
+<td>[OXI p.225]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Launch quantization</strong> is in the project menu (<strong>[Shift] + [Perf]</strong>): P.End, ½, 1, 2, 4, 8, 16 or 32 bars [OXI p.230]. <strong>For ambient/jam use:</strong> set every slot's repeats to <strong>∞</strong> and advance by hand (clip-launch style), with launch quant at 4 or 8 bars. <strong>For a fixed "song":</strong> set repeat counts so it plays itself through.</p>
+<blockquote>
+<p>⚠️ <strong>"Saved patterns are loaded when playing songs."</strong> Save edited patterns <em>before</em> arming the arranger, or you'll hear the old version [OXI p.229].</p>
+</blockquote>
+<hr />
+<h2>2. Octatrack MKII: banks, patterns, parts, scenes</h2>
+<h3>2.1 Structure</h3>
+<ul>
+<li><strong>Project</strong> → <strong>16 banks</strong> (A–P) → each bank has <strong>16 patterns + 4 parts</strong> [OT §10, p.52].</li>
+<li>A <strong>part</strong> holds machine assignments, sample-slot assignments, FX, track parameters and <strong>16 scenes</strong>. Each pattern is linked to one part [OT §10.2].</li>
+<li><strong>128 Flex + 128 Static sample slots</strong> per project [OT §4.4].</li>
+</ul>
+<p><strong>Rule of thumb for performance:</strong> one song = one bank. Patterns = sections. Parts = sound sets. Patterns linked to the <em>same</em> part share sounds. Switch parts only when the sound set must change, because part changes also trigger MIDI-track PC sends (see §4).</p>
+<h3>2.2 Essential combos</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Combo</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Select bank + pattern</td>
+<td><strong>[BANK] + [TRIG]</strong>, then <strong>[TRIG]</strong> (you have ~4 s)</td>
+<td>[OT §12.2.1]</td>
+</tr>
+<tr>
+<td>Select pattern in current bank</td>
+<td><strong>[PTN] + [TRIG]</strong></td>
+<td>[OT §12.2.1]</td>
+</tr>
+<tr>
+<td>Chain patterns (same bank, no repeats)</td>
+<td>Hold <strong>[PTN]</strong>, then press <strong>[TRIG]</strong> keys in order</td>
+<td>[OT §12.2.3, p.64]</td>
+</tr>
+<tr>
+<td>Link a part to the pattern</td>
+<td><strong>[PART]</strong> → arrows → <strong>[YES]</strong> (hold [FUNC] to quick-link)</td>
+<td>[OT §10.2.1]</td>
+</tr>
+<tr>
+<td>Part edit (Rename / Reload / Save / Save All)</td>
+<td><strong>[FUNC] + [PART]</strong></td>
+<td>[OT §10.2.2]</td>
+</tr>
+<tr>
+<td><strong>Reload part</strong> (undo all live tweaks)</td>
+<td><strong>[FUNC] + [CUE]</strong>. Only works if the part was saved</td>
+<td>[OT §10.2.3]</td>
+</tr>
+<tr>
+<td>Copy pattern / paste</td>
+<td><strong>[FUNC] + [RECORD]</strong>, select destination, <strong>[FUNC] + [STOP]</strong>. <em>The part is NOT copied with it</em></td>
+<td>[OT §12.9.1, p.71]</td>
+</tr>
+<tr>
+<td>Quick-save project</td>
+<td><strong>[FUNC] + [PROJ]</strong></td>
+<td>[OT §8.4.1]</td>
+</tr>
+<tr>
+<td>Pattern settings (per-pattern chain behaviour, per-track silence on change)</td>
+<td><strong>[FUNC] + [PTN]</strong></td>
+<td>[OT §3, §12.11]</td>
+</tr>
+<tr>
+<td>MIDI sync settings</td>
+<td><strong>[FUNC] + [MIDI]</strong></td>
+<td>[OT §3]</td>
+</tr>
+<tr>
+<td>Full stop + kill echo + MIDI all-notes-off</td>
+<td><strong>[STOP] + [STOP]</strong></td>
+<td>[OT §12.2.2]</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 Scenes + crossfader for transitions</h3>
+<ul>
+<li>Assign scene to slot A/B: <strong>[SCENE A]/[SCENE B] + [TRIG]</strong> [OT §10.3.1].</li>
+<li>Lock a value into a scene: hold <strong>[SCENE A/B]</strong> + turn a DATA ENTRY knob. Remove a lock: hold the scene key + press the knob [OT §10.3.1].</li>
+<li>Scene mute (bypass the scene): <strong>[FUNC] + [SCENE A/B]</strong> [OT §10.3.3].</li>
+<li>Copy scene: hold scene key + <strong>[RECORD]</strong>. Paste: hold scene key + <strong>[STOP]</strong>. Clear: hold scene key + <strong>[PLAY]</strong> (do it again to undo) [OT §10.3.4–10.3.5].</li>
+<li><strong>XLV / XVOL / XDIR</strong> are scene-only volume parameters, made for crossfader fades [OT §10.3.2].</li>
+</ul>
+<p><strong>Transition recipe:</strong> keep scene A = "section as written". Make scene B = "the exit" (filter close, reverb/delay wash, XVOL down on the drum tracks). Fade to B over the last bars, change the pattern, then snap the fader back to A. The arranger can also set scene A/B <strong>per row</strong> [OT §14.1.1].</p>
+<h3>2.4 Octatrack arranger</h3>
+<ul>
+<li>Toggle arrangement mode: <strong>[FUNC] + [ARR]</strong>. Open the menu: <strong>[ARR]</strong> [OT §14, p.87].</li>
+<li>8 arrangements per project, 256 rows each. Columns: <strong>PAT, REP, OF(fset), LN, SCENE A/B, T(ranspose MIDI tracks), B(PM), M(ute)</strong> [OT §14.1.1].</li>
+<li>Insert row: <strong>[FUNC] + [DOWN]</strong>. Remove row: <strong>[FUNC] + [UP]</strong>. Special PAT entries: <strong>HALT, LOOP, JUMP, REM</strong> (text cue) [OT §14.1.1].</li>
+<li>Save and reload the arrangement from the ARR menu. An asterisk means unsaved [OT §14.1.3–14.1.7].</li>
+<li>It sends and receives <strong>MIDI Song Position Pointer</strong> [OT §14].</li>
+</ul>
+<blockquote>
+<p>Use <strong>REM</strong> rows as on-screen cue cards ("BUILD 8 BARS", "WAIT FOR LIGHTS").</p>
+</blockquote>
+<h3>2.5 Sample-slot organization and one-shot horn hits</h3>
+<ul>
+<li><strong>Name files before you import them.</strong> The slot list shows filenames. You can rename on the device under PROJECT → SYSTEM → CARD TOOLS → FILE MANAGER → RENAME, but be careful [OT §8.5.5]. Put the BPM in loop filenames (e.g. <code>pad_loop_70.wav</code>) and the OT will use it as the tempo hint [OT §13.2.4].</li>
+<li><strong>Reserve a slot range per role.</strong> For example Flex 1–16 drums, 17–32 tonal loops, 33–48 one-shots/stabs, 49–64 textures. <em>(This is a convention, not a device feature.)</em></li>
+<li><strong>Dedicate tracks to one-shot material.</strong> For example T7 = horn stabs/phrases, T8 = long drones (Static machine). Long phrases should be <strong>one-shot trigs</strong>: <strong>[FUNC] + [TRIG]</strong> on an existing trig turns it yellow. Re-arm with <strong>[STOP] + [STOP]</strong> (while stopped), or <strong>[YES]</strong> in grid-record mode [OT §12.4.5, p.66].</li>
+<li>To fire phrases by hand in time, set the sample's <strong>QUANTIZED TRIG</strong> (audio editor → ATTRIBUTES) to PAT.LEN or a step value [OT §13.2.4].</li>
+<li><strong>SAVE SAMPLE SETTINGS</strong> (audio editor → FILE) keeps trim/slice/attributes with the file across projects [OT §13.2.5].</li>
+<li>Before export or travel: <strong>COLLECT SAMPLES</strong> copies used audio into the project folder, and <strong>PURGE SAMPLES</strong> clears unused slots [OT §8.4.1].</li>
+</ul>
+<h3>2.6 Saving: parts vs projects vs banks</h3>
+<ul>
+<li>Day-to-day changes are <strong>auto-cached to the CF card</strong> and survive power-off <strong>inside a project</strong> [OT §4.12].</li>
+<li><strong>Project SAVE</strong> (<strong>[FUNC] + [PROJ]</strong>) sets the <em>restore point</em>, and <strong>RELOAD</strong> returns to it [OT §8.4.1]. Files: <code>.work</code> = live state, <code>.strd</code> = saved state [OT §8.5.5].</li>
+<li><strong>Part SAVE</strong> sets the restore point for <strong>[FUNC] + [CUE]</strong> live reloads [OT §10.2.2–10.2.3].</li>
+<li><strong>SAVE/RELOAD CURRENT BANK</strong>: same idea per bank [OT §8.4.1].</li>
+<li><strong>SYNC TO CARD</strong> before you pull the CF card [OT §8.4.1].</li>
+<li><strong>Recorder buffers are NOT kept</strong> after power-off. Save them in the audio editor or with <strong>[FUNC] + [REC3]</strong> [OT §9].</li>
+</ul>
+<hr />
+<h2>3. Hydrasynth Desktop: patches per section, performance bank, macros</h2>
+<h3>3.1 Program change in</h3>
+<ul>
+<li><strong>SYSTEM SETUP → MIDI page 4:</strong> <strong>MIDI RX</strong> channel (Omni or 1–16), <strong>Clock Sync</strong> (Internal / USB / MIDI In / Auto) [HS p.100].</li>
+<li><strong>MIDI page 6:</strong> <strong>Pgm Chg RX = On</strong> (and Pgm Chg TX if you want the Hydra to send PCs) [HS p.102].</li>
+<li><strong>Banks:</strong> 8 banks × 128 (A–H). To change <em>bank</em>, send <strong>CC#0 = 0 and CC#32 = 0–7 (A–H)</strong> plus a PC. Otherwise only the patch inside the current bank changes [HS p.102].</li>
+<li><strong>PC numbering:</strong> the manual doesn't state whether PC 0 = patch 001. <strong>(unverified: test it.)</strong> The OXI manual warns that 0- vs 1-based numbering varies by device [OXI p.232].</li>
+</ul>
+<h3>3.2 Build a performance bank</h3>
+<ol>
+<li>Pick a <strong>spare bank</strong> (e.g. H) as your "live" bank.</li>
+<li>Save each section's sound into consecutive locations, e.g. H001 Intro pad, H002 A-section chords, H003 B-section chords, H004 peak. <strong>[SAVE]</strong>: Knob 1 sets the location, Knob 5 the bank, Knob 2 the name (16 characters), Knob 3 the category, Knob 8 the colour [HS p.94].
+   - First time: turn <strong>Protect</strong> off (SYSTEM SETUP page 1, knob 4), or saving is blocked [HS p.94].</li>
+<li>Now <strong>PC n always means section n</strong>, which keeps the OXI PC values easy to remember.</li>
+<li>Also add them to <strong>Favorites</strong> (4 groups × 8) for manual fallback: <strong>[BROWSE]</strong> → Control button 8 → assign. Recall with <strong>[SHIFT] + [BROWSE]</strong> [HS p.93].</li>
+<li>Back up the bank with <strong>ASM Manager</strong> [HS p.95].</li>
+</ol>
+<h3>3.3 Macros for live tweaks</h3>
+<ul>
+<li>8 macros per patch, each with up to 8 destinations. They live on the <strong>Home</strong> page [HS p.81].</li>
+<li>Edit: <strong>[MACRO ASSIGN]</strong> → Control button of a macro. Name it on page 4 (up to 8 characters) [HS p.81–82].</li>
+<li><strong>Hold [INIT] + turn a knob</strong> on Home: the macro jumps straight to 0.0 [HS p.81].</li>
+<li><strong>Macro button mode</strong> (SYSTEM SETUP page 2, knob 4): Toggle / Trigger / Switch / Reset [HS p.83].</li>
+<li><strong>On save, Knob 4 = Return / Save / Convert</strong> decides whether the current macro positions are kept. Use <strong>Save</strong> if a section patch should <em>start</em> with a macro already turned up [HS p.82, p.95].</li>
+<li><strong>Suggested consistent layout across all live patches</strong> (convention): M1 brightness/cutoff, M2 movement/LFO depth, M3 space (reverb/delay mix), M4 grit/drive, M5 attack/release ("swell"), M6 pitch/detune, M7–8 per-patch specials. Your hands then know where things are whatever the patch.</li>
+<li><em>Option:</em> CC/NRPN control from the OXI or OT. <strong>Param RX = CC or NRPN</strong> (MIDI page 6). The CC map is in the manual's MIDI CC chart [HS p.102, p.116].</li>
+</ul>
+<hr />
+<h2>4. Sync and control: who drives whom</h2>
+<h3>4.1 Recommended topology A: OXI is the master and conductor <em>(best for chord-led songs)</em></h3>
+<pre><code>OXI One  ──TRS MIDI out (DIN adapter)──►  Octatrack MIDI IN
+                                           Octatrack MIDI THRU ──► Hydrasynth MIDI IN
+</code></pre>
+<ul>
+<li><strong>OXI:</strong> clock source <strong>INT</strong> (<strong>[Shift] + [Stop]</strong> while stopped) [OXI p.257]. Config → MIDI → <strong>MIDI Transport Msgs Send = On</strong> [OXI p.275].</li>
+<li><strong>Octatrack:</strong> <strong>[FUNC] + [MIDI]</strong> → turn on <strong>CLOCK RECEIVE + TRANSPORT RECEIVE</strong>, and <strong>PROG CH RECEIVE</strong> on a fixed channel (e.g. ch 10) [OT §8.7.2, p.40].</li>
+<li><strong>Hydrasynth:</strong> Clock Sync = <strong>MIDI In</strong>, <strong>Pgm Chg RX = On</strong>, <strong>MIDI RX</strong> = its own channel [HS p.100, p.102].</li>
+<li><strong>Section changes:</strong> in the OXI arranger, hold each slot pad and set <strong>PrCh</strong> (and <strong>Bank</strong>) per lane. The chord lane's PC goes to the Hydra. A spare lane set to the OT's PC channel (no notes needed; blank slots can still send PC/Bank) changes OT patterns [OXI p.232].</li>
+<li><strong>Per-pattern PC without the arranger:</strong> sequencer setup page 1 (<strong>[Shift] + Seq [n]</strong>) has <strong>Ch / Out / PC</strong>. That PC is sent <em>when the pattern loads</em> [OXI p.127].</li>
+</ul>
+<h3>4.2 Topology B: Octatrack is the master <em>(best for sample-led or ambient sets with heavy scene work)</em></h3>
+<ul>
+<li><strong>OT:</strong> CLOCK SEND + TRANSPORT SEND, <strong>PROG CH SEND</strong> on a channel. This sends a PC when the OT pattern changes [OT §8.7.2].</li>
+<li><strong>OXI:</strong> sync = <strong>MIDI</strong>. Config → MIDI → <strong>PC receive global channel</strong> = the OT's PC channel. Incoming PC n selects <strong>arranger column n</strong> (column 1 = PC 1) [OXI p.232, p.275].</li>
+<li><strong>Hydra:</strong> PC from an <strong>OT MIDI track</strong>. NOTE SETUP has <strong>BANK / PROG / SBNK</strong>, and these are sent <em>each time a pattern linked to a different part becomes active</em> [OT §15.4.2, p.92]. So <strong>one OT part per Hydra patch</strong> lets the part change pull the patch with it. Or let the OXI's per-pattern PC do it.</li>
+<li><strong>OT PC numbering:</strong> the OT manual doesn't publish which PC value maps to which pattern. Community convention is PC 0–127 = A01–H16. <strong>(unverified: confirm with the OXI MIDI monitor, [Shift] + [Back] [OXI p.278])</strong>.</li>
+</ul>
+<h3>4.3 Ableton Live 12 (optional)</h3>
+<ul>
+<li><strong>As recorder only:</strong> let the hardware master run and set Live to follow MIDI clock. Tune <strong>Sync Delay</strong> per device in Settings → Link, Tempo & MIDI (<a href="https://www.ableton.com/en/live-manual/12/synchronizing-with-link-tempo-follower-and-midi/">Ableton</a>; [OXI p.257]).</li>
+<li><strong>As conductor:</strong> MIDI clips can send <strong>Bank / Sub-bank / Program</strong> on launch (Clip View → Extended Clip Properties) (<a href="https://www.ableton.com/en/live-manual/12/clip-view/">Ableton 8.3.2</a>). One Session scene per section can then fire PCs to all three devices.</li>
+<li><strong>Don't run two masters.</strong> Exactly one device sends clock and everything else receives.</li>
+</ul>
+<h3>4.4 MIDI channel plan template</h3>
+<table>
+<thead>
+<tr>
+<th>Ch</th>
+<th>Device / role</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Hydrasynth (notes + PC + CC)</td>
+<td>OXI chord seq out. Hydra MIDI RX = 1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Spare synth / OXI seq 2</td>
+<td></td>
+</tr>
+<tr>
+<td>3–8</td>
+<td>OT audio tracks T1–T8 trig channels (if you want to play OT tracks from OXI)</td>
+<td>OT PROJECT → MIDI → CHANNELS [OT §8.7.3]</td>
+</tr>
+<tr>
+<td>9</td>
+<td>OT <strong>auto channel</strong> (active track)</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>OT <strong>program change</strong> (receive or send)</td>
+<td>fixed, never AUTO</td>
+</tr>
+<tr>
+<td>11–15</td>
+<td>OT MIDI tracks → other gear</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>OXI <strong>PC receive global</strong> / transport CC</td>
+<td>topology B only</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Template is a suggestion. Adjust it to avoid clashes, and write the final plan on your cheat sheet.)</em></p>
+<hr />
+<h2>5. One-page performance cheat sheet (template)</h2>
+<p><strong>Song:</strong> ________  <strong>BPM:</strong> ___  <strong>Key/scale:</strong> ___  <strong>Clock master:</strong> OXI / OT / Live
+<strong>OXI project slot:</strong> __ (song __)  <strong>OT project / bank:</strong> <strong> / __  **Hy</strong>a bank:** __</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Section</th>
+<th>Bars × reps</th>
+<th>OXI pattern (per seq) / arranger slot</th>
+<th>OXI PC → Hydra</th>
+<th>OT pattern / part</th>
+<th>OT scene A → B</th>
+<th>Hydra patch</th>
+<th>Macro moves</th>
+<th>Notes / cue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Intro</td>
+<td>8 × ∞</td>
+<td>P1 / slot 1</td>
+<td>1</td>
+<td>A01 / P1</td>
+<td>1 → 2</td>
+<td>H001</td>
+<td>M3 up slowly</td>
+<td>wait for cue</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A</td>
+<td>16 × 2</td>
+<td>P2 / slot 2</td>
+<td>2</td>
+<td>A02 / P1</td>
+<td>1 → 3</td>
+<td>H002</td>
+<td>M1 open</td>
+<td>horn stab on T7 bar 9</td>
+</tr>
+<tr>
+<td>3</td>
+<td>B</td>
+<td>16 × 2</td>
+<td>P3 / slot 3</td>
+<td>3</td>
+<td>A03 / P2</td>
+<td>4 → 5</td>
+<td>H003</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Build</td>
+<td>8 × 1</td>
+<td>P4 / slot 4</td>
+<td>–</td>
+<td>A04 / P2</td>
+<td>4 → 6 (wash)</td>
+<td>–</td>
+<td>M5 swell</td>
+<td>XF to B over 8 bars</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Peak</td>
+<td>16 × ∞</td>
+<td>P5 / slot 5</td>
+<td>4</td>
+<td>A05 / P3</td>
+<td>7 → 8</td>
+<td>H004</td>
+<td>M4 grit</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Outro</td>
+<td>8 × 1</td>
+<td>P7 / slot 7</td>
+<td>1</td>
+<td>A07 / P1</td>
+<td>1 → 9 (fade)</td>
+<td>H001</td>
+<td>M3 max</td>
+<td>[STOP] on downbeat</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Emergency:</strong> OT part reload <strong>[FUNC]+[CUE]</strong> · OXI revert pattern <strong>[Shift]+[Load]</strong> · Hydra all notes off <strong>[SHIFT]+[HOME]</strong> [HS p.19] · OT hard stop <strong>[STOP]+[STOP]</strong>.</p>
+<hr />
+<h2>6. Workflow: turn a jam into a performable arrangement</h2>
+<ol>
+<li><strong>Capture first.</strong> Right after the jam, <strong>[Shift]+[Save]</strong> on the OXI and <strong>[FUNC]+[PROJ]</strong> on the OT, and save any Hydra edits to a scratch location. Record a stereo bounce if you can.</li>
+<li><strong>Duplicate the project</strong> on the OXI ("Duplic proj here") and use <strong>SAVE TO NEW</strong> on the OT, so the arrangement work never touches the original jam [OXI p.13; OT §8.4.1].</li>
+<li><strong>List the sections you actually played</strong> (intro, A, B, peak, breakdown, outro) and their rough bar counts. Fill in the cheat-sheet table.</li>
+<li><strong>OXI:</strong> put each section's material into the <em>same pattern slot number</em> across sequencers. Use "Save patt here as copy" to branch variations, <strong>[Shift]+[Copy]</strong> to extend pages, and rename each pattern (e.g. <code>INTRO</code>, <code>CHRS1</code>).</li>
+<li><strong>Octatrack:</strong> one bank for the song, one pattern per section in the same order. Group patterns onto as few parts as possible. Move one-shot phrases to dedicated tracks as one-shot trigs. <strong>Save every part</strong> so <strong>[FUNC]+[CUE]</strong> works.</li>
+<li><strong>Hydrasynth:</strong> save each section's sound into the performance bank in section order, with consistent macro roles. Turn on Pgm Chg RX.</li>
+<li><strong>Wire the control path</strong> (topology A or B), set the channel plan, and confirm with the OXI MIDI monitor (<strong>[Shift]+[Back]</strong>).</li>
+<li><strong>Build the OXI song:</strong> <strong>[Arranger]</strong>, then <strong>[Arranger] + column pad</strong> for each section. Set PrCh/Bank per slot. Set repeats (∞ for jams, counts for a fixed song). Choose launch quantization. Save the song (Knob 2).</li>
+<li><strong>Design transitions:</strong> OT scene B per section as the exit, and Hydra macro moves written in the table.</li>
+<li><strong>Write the new parts</strong> you need as fresh patterns in empty slots, then insert them as arranger columns.</li>
+<li><strong>Rehearse at full length</strong> with the arranger armed. Note any rough changes, fix them, and <strong>save everything</strong> (OXI project + song, OT project + parts + arrangement, Hydra patches).</li>
+<li><strong>Back up:</strong> OXI copy to SD (Project menu → "Copy to SD card") [OXI p.14]. OT: SYNC TO CARD and copy the CF card to a computer. Hydra: ASM Manager.</li>
+</ol>
+<hr />
+<h2>7. Pitfalls</h2>
+<ul>
+<li><strong>OXI unsaved patterns aren't what the arranger plays.</strong> The arranger loads <em>saved</em> patterns [OXI p.229]. Save first.</li>
+<li><strong>OXI arranger disarms on every Stop.</strong> Re-arm with <strong>[Shift]+[Arranger]</strong> before Play [OXI p.229].</li>
+<li><strong>OXI power state:</strong> the manual says the prior state is restored and the last <em>autosaved</em> project loads at power-up [OXI p.10–11]. How reliable that is if the battery dies mid-edit isn't documented <strong>(unverified)</strong>, so quick-save anyway. Check <strong>Inactivity Power-Off Time</strong> in Config so it doesn't sleep at a long gig [OXI p.277].</li>
+<li><strong>Octatrack:</strong> never switch off while the CARD LED blinks [OT §4.12]. Recorder buffers are lost at power-off [OT §9]. Copying a pattern doesn't copy its part [OT §12.9.1]. Part reload only works on <em>saved</em> parts [OT §10.2.3].</li>
+<li><strong>OT part changes:</strong> <strong>SILENCE TRACKS</strong> decides whether old samples ring on or cut when the part changes [OT §8.6.3]. MIDI-track PROG/BANK fire on part change, so an unexpected part change can also change the Hydra patch [OT §15.4.2].</li>
+<li><strong>OT pattern changes are quantized</strong> to the end of the pattern by default (<strong>CHAIN AFTER = PAT.LEN</strong>, overridable per pattern) [OT §8.6.3]. If the OXI sends a PC late in a section, the OT changes at the end of <em>its</em> current pattern. <strong>Keep pattern lengths aligned across devices.</strong> How the OXI's "2 ticks early" PC lines up with the OT's queue in practice is <strong>(unverified: test at your tempo)</strong>.</li>
+<li><strong>Hydra edits vanish on PC.</strong> <strong>Safe Edit doesn't block incoming program changes</strong> [HS p.98]. Save before arming the song.</li>
+<li><strong>PC off-by-one</strong> between devices (0- vs 1-based) [OXI p.232]. Verify with the MIDI monitor.</li>
+<li><strong>Clock drift/jitter:</strong> use one master. Turn <em>off</em> clock receive on every device that shouldn't follow, so you don't get loops. Keep MIDI Thru settings sane: OXI TRS/USB Thru defaults are in Config → MIDI [OXI p.275]. With a DAW, set Sync Delay [Ableton]. The OXI falls back to its internal clock if the external clock stops, which can mask a dropped cable [OXI p.258]. The Hydra <strong>can't sync to an incoming CV clock</strong> [HS p.100].</li>
+<li><strong>Hydra Protect = On</strong> blocks saving the first time [HS p.94].</li>
+</ul>
+<hr />
+<h2>8. Pre-gig checklist</h2>
+<p><strong>Night before</strong></p>
+<ul>
+<li class="task">☐ OXI: project + song saved (<strong>[Shift]+[Save]</strong>), copied to SD</li>
+<li class="task">☐ OT: project SAVE, all parts SAVE ALL, arrangement saved, SYNC TO CARD, CF backed up</li>
+<li class="task">☐ Hydra: performance bank saved and backed up (ASM Manager). Protect back <strong>On</strong> to prevent accidental overwrites</li>
+<li class="task">☐ Cheat sheet printed (large font) + channel plan</li>
+<li class="task">☐ Full-length run-through with the arranger armed</li>
+</ul>
+<p><strong>At the venue</strong></p>
+<ul>
+<li class="task">☐ Power, then check every device loaded the right project/bank</li>
+<li class="task">☐ Clock master set. Slaves show external sync. Tempo correct</li>
+<li class="task">☐ Press Play on the master: does everything start together? Stop: do all stop?</li>
+<li class="task">☐ Step through every section once and confirm the PCs land on the OT and Hydra (MIDI monitor if not)</li>
+<li class="task">☐ OT one-shots re-armed (<strong>[STOP]+[STOP]</strong> while stopped)</li>
+<li class="task">☐ OXI arranger <strong>armed</strong> (blue) right before you start</li>
+<li class="task">☐ Crossfader on the A side. Scenes per cheat sheet. Hydra macros at their start positions</li>
+<li class="task">☐ Levels/gain staging at the mixer. Headphone cue checked</li>
+<li class="task">☐ Spare cables: MIDI (TRS-A adapter for OXI!), USB-C, power</li>
+</ul>
+<hr />
+<h2>Unverified items (test on your rig)</h2>
+<ol>
+<li>Hydrasynth PC numbering (does PC 0 = patch 001?).</li>
+<li>Octatrack PC value → pattern mapping (community: 0–127 = A01–H16) for both PROG CH SEND and RECEIVE.</li>
+<li>How the OXI arranger's PC (sent 2 ticks before its transition) lines up with the OT's PAT.LEN pattern-change queue.</li>
+<li>How reliable OXI autosave/restore is after an unexpected power loss.</li>
+<li>The slot-range, channel-plan and macro-layout suggestions are conventions, not device requirements.</li>
+</ol>
+</main>
+</body>
+</html>
