@@ -18,4 +18,4 @@ Michael explicitly OK'd publishing details from the private repos.
 
 Each Markdown file has YAML front matter, prose sections, and Mermaid in fenced blocks. Uncertain items are marked in the diagrams and in the prose. Times are Europe/Amsterdam (UTC+1). Facts are taken from READMEs, AGENTS/MISSION docs, issues, PRs, comments, and Projects v2 boards — not from code diffs. Gaps are listed at the end of each file and in this folder's data notes.
 
-The ModellingAudioProcessors board reported 36 items; only the first 30 were retrieved before the Projects GraphQL API started returning rate-limit / "unknown owner type" errors. All 23 open issues appear in those 30. See `modelling-audio-processors.data.json` `board.retrieval_note`.
+Board snapshots are complete for all three projects (Deianira 16, ModellingAudioProcessors 36, Modwerk 25). A first ModellingAudioProcessors fetch returned only 30 items because of a temporary Projects GraphQL rate limit; a later `--limit 100` call at 21:07 Europe/Amsterdam on 20 Nov 2026 retrieved all 36.

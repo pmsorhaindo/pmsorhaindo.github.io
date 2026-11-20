@@ -134,17 +134,15 @@ Related, not on that critical path: https://github.com/pmsorhaindo/ModellingAudi
 
 ## Board snapshot
 
-User project https://github.com/users/pmsorhaindo/projects/7. The board reported 36 items. The first 30 were retrieved; the remaining 6 were not, after the Projects GraphQL API began returning rate-limit / "unknown owner type" errors. All 23 open issues appear in the retrieved 30. Open PR https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/92 (cut-down 12AX7 prototype, refs #23) is not in those 30 and may be among the missing items.
+User project https://github.com/users/pmsorhaindo/projects/7, all 36 items, as of 21:07 Europe/Amsterdam on 20 Nov 2026. (An earlier first page of 30 was completed by a later `--limit 100` fetch after a temporary Projects GraphQL rate limit.)
 
-Retrieved items:
-
-| Status | Count in the 30 | Highlights |
+| Status | Count | Highlights |
 |---|---|---|
-| Done | 6 | #19, #20, #21, #22, #39, #67 |
+| Done | 11 | #19, #20, #21, #22, #39, #67, #70, #72, #73, #74, #76 |
 | In progress | 2 | #111, PR #121 |
-| Todo | 22 | including workstreams #10 and #11, v1 scope/name #75, 6AS6 path #104–#115 and #123–#127, Octatrack #23–#24, future research #106–#109 |
+| Todo | 23 | including workstreams #10 and #11, v1 scope/name #75, 6AS6 path #104–#115 and #123–#127, Octatrack #23–#24 (open PR #92), future research #106–#109 |
 
-Priorities are filled on #123–#127 only (P1: #123, #124, #126; P2: #125, #127). Earlier items have no Priority field in the retrieved snapshot. Full rows are in `modelling-audio-processors.data.json`.
+Priorities are filled on #123–#127 only (P1: #123, #124, #126; P2: #125, #127). Earlier items have no Priority field in the snapshot. Full rows are in `modelling-audio-processors.data.json`.
 
 ## Issue dependencies
 
@@ -228,7 +226,8 @@ Times are Europe/Amsterdam.
 
 ## Gaps
 
-- 6 of 36 board items were not retrieved (Projects API rate limit / "unknown owner type" after the first page of 30). Open PR #92 may be among them. No Priority values were present on most older items.
+- No Priority values were present on most older items (#123–#127 are the exception).
+- An earlier board fetch returned only 30 of 36 items because of a Projects GraphQL rate limit; a later `--limit 100` call at 21:07 Europe/Amsterdam retrieved all 36, including Done items #70, #72, #73, #74, #76 and open PR #92 (Todo).
 - The 18 Nov README status is partly stale relative to later closes and merges; issue/PR state was preferred where they disagree.
 - PR #119's relationship to the still-open #103 was not read beyond the PR title and the issue's open state.
 - No code diffs, SPICE netlists, or RESULTS.md tables were re-read for this write-up, except as quoted in READMEs and issues.
