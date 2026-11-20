@@ -1,5 +1,6 @@
 ---
 title: Deianira
+order: 1
 repo: pmsorhaindo/Deianira
 repo_url: https://github.com/pmsorhaindo/Deianira
 visibility: private
@@ -8,7 +9,14 @@ board: https://github.com/users/pmsorhaindo/projects/3
 board_number: 3
 as_of: "2026-11-20 evening"
 timezone: Europe/Amsterdam
+description: "Deianira: hobby research into ASM Hydrasynth Desktop firmware, done by emulator and static analysis only. Goal 1, instant patch switching, is in progress."
+summary: "Hobby research into the ASM Hydrasynth Desktop's firmware (official 2.2.0), done in an emulator or by static analysis only &mdash; nothing is flashed to real hardware. The itch: a MIDI Program Change makes the Hydrasynth go briefly silent while the new patch loads, and neither the Octatrack nor the OXI One can hide it."
+direction: "Two goals from MISSION.md: instant patch switching (the current focus) and custom wavetables (future work). &ldquo;Done&rdquo; for goal 1 means a written explanation of the gap plus either a working emulator-only fast-switch prototype, or a clear reason it isn't feasible."
+status: "Goal 1's gap analysis is merged (#3 / PR #9). Draft PR #24 prototypes a MIDI-only fast path, but its 15&nbsp;ms timbre target isn't met yet (#23). #10 is approved but shouldn't merge until #16 is understood."
 ---
+<div class="project-page" markdown="1">
+
+{% include project-header.html %}
 
 # Deianira
 
@@ -155,13 +163,7 @@ The firmware pack, unpacked `A5 code`, Ghidra project and patched emulator build
 
 User project https://github.com/users/pmsorhaindo/projects/3, as of the evening of 20 Nov 2026, Europe/Amsterdam. 16 items. Closed issues #1 and #2, and merged PRs #5–#8, are not on this board. Draft PR #21 is linked from #14; draft PR #24 is linked from #10.
 
-| Status | Count | Items |
-|---|---|---|
-| Done | 4 | #3, #9, #20, #22 |
-| In progress | 2 | #10 (PR #24), #14 (PR #21) |
-| Todo | 10 | #4, #11, #12, #13, #15, #16, #17, #18, #19, #23 |
-
-P1 Todo / In progress: #10, #11, #15, #16, #18, #23. P2: #4, #12, #13, #14, #17, #19, and #22 (Done). Full rows are in `deianira.data.json`.
+{% include project-board.html slug=page.slug %}
 
 ## Issue dependencies
 
@@ -267,3 +269,5 @@ QUESTIONS.md still lists a few things only Michael can decide: whether to offer 
 ## Gaps
 
 Board items, issue and PR metadata, and #22 / #23 / #24 were refreshed on the evening of 20 Nov 2026. QUESTIONS.md was last read at PR #20's merge commit; later edits, if any, were not re-fetched after #22. No code diffs were read.
+
+</div><!-- /.project-page -->

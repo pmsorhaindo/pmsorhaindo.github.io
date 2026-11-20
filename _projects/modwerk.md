@@ -1,5 +1,6 @@
 ---
 title: Modwerk
+order: 3
 repo: pmsorhaindo/modwerk
 repo_url: https://github.com/pmsorhaindo/modwerk
 visibility: public
@@ -8,7 +9,14 @@ board: https://github.com/users/pmsorhaindo/projects/10
 board_number: 10
 as_of: "2026-11-20 evening"
 timezone: Europe/Amsterdam
+description: "Modwerk: an independent, unofficial community workshop for modding electronic-music hardware. TURING and CUBE are the two active Octatrack workstreams."
+summary: "A community workshop, independent and unofficial, for opening up electronic-music hardware to mods &mdash; starting with Elektron gear. Anyone who owns an instrument starts at <a href=\"https://modwerk.app/\">modwerk.app</a>, sees how far that machine has come, and tries the next mod over USB from their own OS file, undone with a power cycle."
+direction: "From AGENTS.md: anyone can start from one click on the machine page; what one person learns, everyone gets; every machine grows the same base/hooks/USB/tools stack; musicians can trust that modules never brick a unit; the community runs it, not automatic merges."
+status: "TURING (#8 / PR #6) and CUBE (#9 / PR #7) are the two active Octatrack module workstreams, both emulator-gated with hardware tests still open. Draft PR #25 must not be merged until a base 0.7.9 rebuild is tested on a real unit."
 ---
+<div class="project-page" markdown="1">
+
+{% include project-header.html %}
 
 # Modwerk
 
@@ -115,17 +123,9 @@ Uncertain or incomplete in the sources: loading without a reboot is not built on
 
 ## Board snapshot
 
-User project https://github.com/users/pmsorhaindo/projects/10, 25 items retrieved (totalCount 25).
+User project https://github.com/users/pmsorhaindo/projects/10, 25 items retrieved (totalCount 25). https://github.com/pmsorhaindo/modwerk/issues/27 is titled "Test Issue!" and is still Todo, P3; it was opened to test the issue-notification workflow. Most board items have no Priority field. Open issues in the repo match the board's issue list (16 open issues); the eight open PRs are all on the board.
 
-| Status | Count | Items |
-|---|---|---|
-| Done | 1 | #24 (T7 MIDI Generator study) |
-| In progress | 8 | PRs #1, #2, #3, #4, #5, #6, #7, #25 |
-| Todo | 16 | workstreams #8 and #9, T1–T6, C1–C7, and test issue #27 (P3) |
-
-https://github.com/pmsorhaindo/modwerk/issues/27 is titled "Test Issue!" and is still Todo, P3; it was opened to test the issue-notification workflow. Most board items have no Priority field. Full rows are in `modwerk.data.json`.
-
-Open issues in the repo match the board's issue list (16 open issues). The eight open PRs are all on the board.
+{% include project-board.html slug=page.slug %}
 
 ## Issue dependencies
 
@@ -221,3 +221,5 @@ A push to `main` deploys, so AGENTS.md says never push to it.
 - Individual Turing/CUBE PR bodies for #1–#7 were not all read; #6, #7, #8, #9 and #25 were.
 - Changelog files for 1–19 Nov 2026 were listed but not summarised one-by-one.
 - No code diffs were read.
+
+</div><!-- /.project-page -->

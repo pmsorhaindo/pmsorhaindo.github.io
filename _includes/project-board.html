@@ -1,0 +1,39 @@
+{% assign proj = site.data.projects[include.slug] %}
+<div class="board" data-board-id="{{ include.slug }}">
+  <p class="board-meta">
+    Board: <a href="{{ proj.board.url }}" target="_blank" rel="noopener noreferrer">{{ proj.board.url | remove_first: 'https://' }}</a>
+    &middot; {{ proj.board.totalCount | default: proj.board.retrieved }} items
+  </p>
+  <div class="board-toolbar" role="group" aria-label="Filter the board for {{ proj.project }}">
+    <input type="search" class="board-search" placeholder="Filter by title or #&hellip;" aria-label="Filter by title or number">
+    <select class="board-filter" data-field="status" aria-label="Filter by status">
+      <option value="">Status: all</option>
+    </select>
+    <select class="board-filter" data-field="type" aria-label="Filter by type">
+      <option value="">Type: all</option>
+    </select>
+    <select class="board-filter" data-field="priority" aria-label="Filter by priority">
+      <option value="">Priority: all</option>
+    </select>
+    <button type="button" class="board-reset">Reset</button>
+  </div>
+  <table class="board-table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Type</th>
+        <th scope="col">Title</th>
+        <th scope="col">Status</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Labels</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="board-empty"><td colspan="6">Loading board&hellip;</td></tr>
+    </tbody>
+  </table>
+  <p class="board-count" aria-live="polite"></p>
+  <script type="application/json" class="board-data">
+    {{ proj.board.items | jsonify }}
+  </script>
+</div>

@@ -3,3 +3,5 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/library.js"></script>
 <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+{% if page.extra_js %}{% for src in page.extra_js %}<script type="module" src="/js/{{ src }}"></script>
+{% endfor %}{% endif %}

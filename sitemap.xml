@@ -17,4 +17,10 @@
     {% endif %}
     {% endif %}
     {% endfor %}
+
+    {% for project in site.projects %}
+    <url>
+        <loc>http://pmsorhaindo.com{{ project.url | remove: 'index.html' }}</loc>
+    </url>
+    {% endfor %}
 </urlset>

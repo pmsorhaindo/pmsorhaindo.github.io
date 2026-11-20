@@ -1,5 +1,6 @@
 ---
 title: ModellingAudioProcessors
+order: 2
 repo: pmsorhaindo/ModellingAudioProcessors
 repo_url: https://github.com/pmsorhaindo/ModellingAudioProcessors
 visibility: private
@@ -8,7 +9,14 @@ board: https://github.com/users/pmsorhaindo/projects/7
 board_number: 7
 as_of: "2026-11-20 evening"
 timezone: Europe/Amsterdam
+description: "ModellingAudioProcessors: C/C++ models of analog audio processors, starting with a valve saturator plugin. Code name Gyre, v1 scope decided."
+summary: "Research and C/C++ implementations of analog audio processor models, starting with a valve saturator plugin (AU / VST3) <em>inspired by</em> &mdash; not an emulation of &mdash; the Thermionic Culture Vulture. Circuit values are example values, not measured from any commercial unit."
+direction: "v1 scope, decided 19 Nov: the 6AS6 pentode distortion stage plus the post-distortion filter as the core, with the 12AX7 stage (already working) as an optional swap-in. Code name is Gyre; the shipping name and a trademark search are still open."
+status: "The first loadable 12AX7 plugin is merged. On the 6AS6 path, circuit values, bias and a filter prototype are done; T/P1/P2 mode wiring (#111 / PR #121) is in progress, and P2 support is blocked on #123."
 ---
+<div class="project-page" markdown="1">
+
+{% include project-header.html %}
 
 # ModellingAudioProcessors
 
@@ -42,7 +50,7 @@ The 18 Nov 2026 README status (written the same day as several later merges) lis
 Workstreams on the board:
 
 - https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/10 — C++ core and plugin. Sub-issues #19–#22, #39 and #67 are Done.
-- https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/11 — Octatrack (modwerk) port, not started on hardware. https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/106 is a future move of this work into the modwerk repo (tracking only).
+- https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/11 — Octatrack (modwerk) port, not started on hardware. https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/106 is a future move of this work into the [Modwerk]({{ '/projects/modwerk/' | relative_url }}) repo (tracking only).
 - Later research tracks, also from comments on #75: graphics and design (#105), Overstayer (#107), Sherman filter bank (#108), reusable modelling tooling (#109).
 
 ## Architecture
@@ -134,15 +142,9 @@ Related, not on that critical path: https://github.com/pmsorhaindo/ModellingAudi
 
 ## Board snapshot
 
-User project https://github.com/users/pmsorhaindo/projects/7, all 36 items, as of 21:07 Europe/Amsterdam on 20 Nov 2026. (An earlier first page of 30 was completed by a later `--limit 100` fetch after a temporary Projects GraphQL rate limit.)
+User project https://github.com/users/pmsorhaindo/projects/7, all 36 items, as of 21:07 Europe/Amsterdam on 20 Nov 2026. (An earlier first page of 30 was completed by a later `--limit 100` fetch after a temporary Projects GraphQL rate limit.) Priorities are filled on #123–#127 only (P1: #123, #124, #126; P2: #125, #127); earlier items have no Priority field in the snapshot.
 
-| Status | Count | Highlights |
-|---|---|---|
-| Done | 11 | #19, #20, #21, #22, #39, #67, #70, #72, #73, #74, #76 |
-| In progress | 2 | #111, PR #121 |
-| Todo | 23 | including workstreams #10 and #11, v1 scope/name #75, 6AS6 path #104–#115 and #123–#127, Octatrack #23–#24 (open PR #92), future research #106–#109 |
-
-Priorities are filled on #123–#127 only (P1: #123, #124, #126; P2: #125, #127). Earlier items have no Priority field in the snapshot. Full rows are in `modelling-audio-processors.data.json`.
+{% include project-board.html slug=page.slug %}
 
 ## Issue dependencies
 
@@ -231,3 +233,5 @@ Times are Europe/Amsterdam.
 - The 18 Nov README status is partly stale relative to later closes and merges; issue/PR state was preferred where they disagree.
 - PR #119's relationship to the still-open #103 was not read beyond the PR title and the issue's open state.
 - No code diffs, SPICE netlists, or RESULTS.md tables were re-read for this write-up, except as quoted in READMEs and issues.
+
+</div><!-- /.project-page -->

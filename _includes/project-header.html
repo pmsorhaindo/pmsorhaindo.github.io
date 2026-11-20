@@ -1,0 +1,3 @@
+<p><a href="{{ '/projects/' | relative_url }}">&larr; all projects</a></p>
+
+<p class="project-header-meta"><a href="{{ page.repo_url }}" target="_blank" rel="noopener noreferrer">{{ page.repo }}</a> <span class="project-visibility">{{ page.visibility }} repo</span> &middot; <a href="{{ page.board }}" target="_blank" rel="noopener noreferrer">project board</a>{% if page.homepage %} &middot; <a href="{{ page.homepage }}" target="_blank" rel="noopener noreferrer">{{ page.homepage }}</a>{% endif %} &middot; as of {{ page.as_of }} ({{ page.timezone }})</p>
