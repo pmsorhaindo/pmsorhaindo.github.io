@@ -14,7 +14,7 @@ summary: "Research and C/C++ implementations of analog audio processor models, s
 direction: "v1 scope, decided 19 Nov: the 6AS6 pentode distortion stage plus the post-distortion filter as the core, with the 12AX7 stage (already working) as an optional swap-in. Code name is Gyre; the shipping name and a trademark search are still open."
 status: "The first loadable 12AX7 plugin is merged. On the 6AS6 path, circuit values, bias and a filter prototype are done; T/P1/P2 mode wiring (#111 / PR #121) is in progress, and P2 support is blocked on #123."
 ---
-<div class="project-page" markdown="1">
+<main class="project-page" markdown="1">
 
 {% include project-header.html %}
 
@@ -234,4 +234,4 @@ Times are Europe/Amsterdam.
 - PR #119's relationship to the still-open #103 was not read beyond the PR title and the issue's open state.
 - No code diffs, SPICE netlists, or RESULTS.md tables were re-read for this write-up, except as quoted in READMEs and issues.
 
-</div><!-- /.project-page -->
+</main><!-- /.project-page -->

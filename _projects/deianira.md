@@ -14,7 +14,7 @@ summary: "Hobby research into the ASM Hydrasynth Desktop's firmware (official 2.
 direction: "Two goals from MISSION.md: instant patch switching (the current focus) and custom wavetables (future work). &ldquo;Done&rdquo; for goal 1 means a written explanation of the gap plus either a working emulator-only fast-switch prototype, or a clear reason it isn't feasible."
 status: "Goal 1's gap analysis is merged (#3 / PR #9). Draft PR #24 prototypes a MIDI-only fast path, but its 15&nbsp;ms timbre target isn't met yet (#23). #10 is approved but shouldn't merge until #16 is understood."
 ---
-<div class="project-page" markdown="1">
+<main class="project-page" markdown="1">
 
 {% include project-header.html %}
 
@@ -270,4 +270,4 @@ QUESTIONS.md still lists a few things only Michael can decide: whether to offer 
 
 Board items, issue and PR metadata, and #22 / #23 / #24 were refreshed on the evening of 20 Nov 2026. QUESTIONS.md was last read at PR #20's merge commit; later edits, if any, were not re-fetched after #22. No code diffs were read.
 
-</div><!-- /.project-page -->
+</main><!-- /.project-page -->

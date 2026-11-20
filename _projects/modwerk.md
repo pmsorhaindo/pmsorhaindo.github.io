@@ -14,7 +14,7 @@ summary: "A community workshop, independent and unofficial, for opening up elect
 direction: "From AGENTS.md: anyone can start from one click on the machine page; what one person learns, everyone gets; every machine grows the same base/hooks/USB/tools stack; musicians can trust that modules never brick a unit; the community runs it, not automatic merges."
 status: "TURING (#8 / PR #6) and CUBE (#9 / PR #7) are the two active Octatrack module workstreams, both emulator-gated with hardware tests still open. Draft PR #25 must not be merged until a base 0.7.9 rebuild is tested on a real unit."
 ---
-<div class="project-page" markdown="1">
+<main class="project-page" markdown="1">
 
 {% include project-header.html %}
 
@@ -222,4 +222,4 @@ A push to `main` deploys, so AGENTS.md says never push to it.
 - Changelog files for 1–19 Nov 2026 were listed but not summarised one-by-one.
 - No code diffs were read.
 
-</div><!-- /.project-page -->
+</main><!-- /.project-page -->
