@@ -1,0 +1,364 @@
+{
+  "project": "Deianira",
+  "repo": "pmsorhaindo/Deianira",
+  "repo_url": "https://github.com/pmsorhaindo/Deianira",
+  "visibility": "private",
+  "as_of": "2026-11-20T21:00:00+01:00",
+  "timezone": "Europe/Amsterdam",
+  "board": {
+    "number": 3,
+    "url": "https://github.com/users/pmsorhaindo/projects/3",
+    "totalCount": 16,
+    "retrieved": 16,
+    "counts": {
+      "Done": 4,
+      "In Progress": 2,
+      "Todo": 10
+    },
+    "items": [
+      {
+        "number": 3,
+        "type": "Issue",
+        "title": "Find which stage causes the audible gap on program change",
+        "status": "Done",
+        "priority": "P1",
+        "labels": [
+          "claude",
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/3",
+        "linked": [
+          "https://github.com/pmsorhaindo/Deianira/pull/9"
+        ]
+      },
+      {
+        "number": 4,
+        "type": "Issue",
+        "title": "Design study: preload / double-buffer the next patch (paper first)",
+        "status": "Todo",
+        "priority": "P2",
+        "labels": [
+          "codex",
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/4",
+        "linked": []
+      },
+      {
+        "number": 9,
+        "type": "PullRequest",
+        "title": "Issue #3: which stage causes the program-change gap (emulator, 2.2.0)",
+        "status": "Done",
+        "priority": "P1",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/Deianira/pull/9",
+        "linked": []
+      },
+      {
+        "number": 10,
+        "type": "Issue",
+        "title": "Emulator prototype: MIDI-only fast path without the 80 ms program-change debounce",
+        "status": "In Progress",
+        "priority": "P1",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/10",
+        "linked": [
+          "https://github.com/pmsorhaindo/Deianira/pull/24"
+        ]
+      },
+      {
+        "number": 11,
+        "type": "Issue",
+        "title": "What sounding voices do without the voices-off message (0x3F/0x57) on a program change",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/11",
+        "linked": []
+      },
+      {
+        "number": 12,
+        "type": "Issue",
+        "title": "Find the residual pctrace trace perturbation (traced vs untraced runs drift up to ~0.9 ms)",
+        "status": "Todo",
+        "priority": "P2",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/12",
+        "linked": []
+      },
+      {
+        "number": 13,
+        "type": "Issue",
+        "title": "Measure the program-change gap for patches with Tap Trig and different FX types",
+        "status": "Todo",
+        "priority": "P2",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/13",
+        "linked": []
+      },
+      {
+        "number": 14,
+        "type": "Issue",
+        "title": "CI: run the firmware-free tests and tools checks on every PR",
+        "status": "In Progress",
+        "priority": "P2",
+        "labels": [
+          "infra"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/14",
+        "linked": [
+          "https://github.com/pmsorhaindo/Deianira/pull/21"
+        ]
+      },
+      {
+        "number": 15,
+        "type": "Issue",
+        "title": "Find where the PgmChgRX setting is actually tested on the MIDI receive path",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/15",
+        "linked": []
+      },
+      {
+        "number": 16,
+        "type": "Issue",
+        "title": "Work out what the 80 ms and 200 ms program-change timers protect",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/16",
+        "linked": []
+      },
+      {
+        "number": 17,
+        "type": "Issue",
+        "title": "Emulator prototype: switch each voice to the new patch only when its note is released",
+        "status": "Todo",
+        "priority": "P2",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/17",
+        "linked": []
+      },
+      {
+        "number": 18,
+        "type": "Issue",
+        "title": "Explain why notes right after a program change are about 5–10 dB quieter on MeloLead (A002)",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/18",
+        "linked": []
+      },
+      {
+        "number": 19,
+        "type": "Issue",
+        "title": "Map how the built-in single-cycle wavetables are stored and selected",
+        "status": "Todo",
+        "priority": "P2",
+        "labels": [
+          "wavetables"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/19",
+        "linked": []
+      },
+      {
+        "number": 20,
+        "type": "PullRequest",
+        "title": "docs: add Goals section and architecture/program-change diagrams",
+        "status": "Done",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/Deianira/pull/20",
+        "linked": []
+      },
+      {
+        "number": 22,
+        "type": "PullRequest",
+        "title": "docs: remove Goals section and docs/diagrams",
+        "status": "Done",
+        "priority": "P2",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/Deianira/pull/22",
+        "linked": []
+      },
+      {
+        "number": 23,
+        "type": "Issue",
+        "title": "What still changes in the first ~30 ms after a fast-path load (new notes don't sound like the target until d ≈ 30 ms)",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [
+          "patch-switching"
+        ],
+        "url": "https://github.com/pmsorhaindo/Deianira/issues/23",
+        "linked": []
+      }
+    ]
+  },
+  "open_draft_prs": [
+    {
+      "number": 21,
+      "title": "CI: run the firmware-free tests and tools checks on every PR (#14)",
+      "url": "https://github.com/pmsorhaindo/Deianira/pull/21",
+      "created_at_amsterdam": "2026-11-20 20:45"
+    },
+    {
+      "number": 24,
+      "title": "Issue #10: MIDI-only program-change fast path (emulator caves), panel debounce kept",
+      "url": "https://github.com/pmsorhaindo/Deianira/pull/24",
+      "created_at_amsterdam": "2026-11-20 20:55"
+    }
+  ],
+  "dependencies": {
+    "edges": [
+      {
+        "from": 1,
+        "to": 3,
+        "kind": "depends",
+        "note": "Issue #3 depends on the timing-harness issue"
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "kind": "related",
+        "note": "helped by the rebuild-tail map"
+      },
+      {
+        "from": 1,
+        "to": 16,
+        "kind": "builds-on"
+      },
+      {
+        "from": 3,
+        "to": 16,
+        "kind": "builds-on",
+        "note": "builds on PR #9 / #3"
+      },
+      {
+        "from": 1,
+        "to": 15,
+        "kind": "builds-on"
+      },
+      {
+        "from": 2,
+        "to": 15,
+        "kind": "builds-on"
+      },
+      {
+        "from": 16,
+        "to": 10,
+        "kind": "gates-merge",
+        "note": "#10 should not be merged until #16 is understood or explicitly accepted"
+      },
+      {
+        "from": 15,
+        "to": 10,
+        "kind": "informs",
+        "note": "answer is used by #10; PR #24 reports a verified address"
+      },
+      {
+        "from": 3,
+        "to": 10,
+        "kind": "related"
+      },
+      {
+        "from": 10,
+        "to": 23,
+        "kind": "depends",
+        "note": "#23 was opened from PR #24 because d=15 timbre acceptance is not met"
+      },
+      {
+        "from": 23,
+        "to": 10,
+        "kind": "informs",
+        "note": "faster switch still leaves first ~20–30 ms neither-patch"
+      },
+      {
+        "from": 23,
+        "to": 17,
+        "kind": "informs"
+      },
+      {
+        "from": 23,
+        "to": 4,
+        "kind": "informs"
+      },
+      {
+        "from": 23,
+        "to": 18,
+        "kind": "related",
+        "note": "may share a cause"
+      },
+      {
+        "from": 3,
+        "to": 11,
+        "kind": "depends"
+      },
+      {
+        "from": 1,
+        "to": 18,
+        "kind": "builds-on"
+      },
+      {
+        "from": 11,
+        "to": 18,
+        "kind": "related"
+      },
+      {
+        "from": 18,
+        "to": 10,
+        "kind": "informs",
+        "note": "results should be taken into account in #10"
+      },
+      {
+        "from": 11,
+        "to": 4,
+        "kind": "related",
+        "note": "core question for #4"
+      },
+      {
+        "from": 10,
+        "to": 17,
+        "kind": "depends"
+      },
+      {
+        "from": 11,
+        "to": 17,
+        "kind": "depends"
+      },
+      {
+        "from": 4,
+        "to": 17,
+        "kind": "depends",
+        "note": "do not start #17 until #10, #11 and #4 have enough of an answer"
+      },
+      {
+        "from": 13,
+        "to": 17,
+        "kind": "related",
+        "note": "if Tap Trig or FX changes affect held voices"
+      }
+    ]
+  },
+  "notes": [
+    "Board refreshed on the evening of 20 Nov 2026. #22 is Done; #23 is Todo P1; #10 is In Progress with linked PR #24; #14 is In Progress with linked PR #21.",
+    "Closed issues #1 and #2 and merged PRs #5–#8 are not on the board."
+  ]
+}
