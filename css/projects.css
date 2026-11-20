@@ -16,22 +16,30 @@
 .project-card h2 a { text-decoration: none; }
 .project-card .project-visibility {
   display: inline-block; font-size: 11px; text-transform: uppercase;
-  letter-spacing: .04em; color: #777; border: 1px solid #ccc; border-radius: 3px;
+  letter-spacing: .04em; color: #595959; border: 1px solid #ccc; border-radius: 3px;
   padding: 1px 6px; margin-left: 8px; vertical-align: middle;
 }
 .project-card .project-section-label {
   display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
-  color: #999; margin: 14px 0 2px;
+  color: #595959; margin: 14px 0 2px;
 }
 .project-card .project-section-label:first-of-type { margin-top: 0; }
 .project-card p { margin: 0 0 6px; line-height: 1.5em; }
-.project-card .project-as-of { margin-top: 14px; font-size: 12px; color: #888; }
+.project-card .project-as-of { margin-top: 14px; font-size: 12px; color: #595959; }
+.project-card .project-as-of a, .projects-index .lead a { text-decoration: underline; }
 .project-card .board-counts { margin-top: 6px; }
 .project-card .board-counts .badge { margin-right: 4px; }
 
-.project-page { width: 92%; max-width: 980px; margin: 0 auto 40px; line-height: 1.65em; }
+.project-page {
+  width: 92%; max-width: 980px; margin: 0 auto 40px; line-height: 1.65em;
+  /* The source material writes plenty of bare, unbroken GitHub URLs in
+     prose, list items and table cells. Without this, those force the
+     page wider than the viewport on narrow screens. */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 .project-page h1 { margin-top: 0; }
-.project-header-meta { color: #777; font-size: 14px; margin: 0 0 24px; }
+.project-header-meta { color: #595959; font-size: 14px; margin: 0 0 24px; }
 .project-header-meta .project-visibility {
   display: inline-block; font-size: 11px; text-transform: uppercase;
   letter-spacing: .04em; border: 1px solid #ccc; border-radius: 3px; padding: 1px 6px;
@@ -39,11 +47,24 @@
 .project-page h2 { margin-top: 2.2em; }
 .project-page h3 { margin-top: 1.6em; }
 .project-page pre { white-space: pre-wrap; word-break: break-word; }
-.project-page table:not(.board-table) { width: 100%; margin: 1em 0; border-collapse: collapse; }
+.project-page table:not(.board-table) {
+  width: 100%; margin: 1em 0; border-collapse: collapse;
+  /* table-layout: auto sizes columns by content, and even with
+     overflow-wrap set, long unbroken URLs in a cell can still push
+     the table past 100% in some browsers. Fixed layout guarantees the
+     table never grows past its own width. */
+  table-layout: fixed;
+}
 .project-page table:not(.board-table) th,
 .project-page table:not(.board-table) td { border: 1px solid #e3e3e3; padding: 6px 10px; text-align: left; vertical-align: top; }
 .project-page table:not(.board-table) th { background: #f5f5f5; }
 .project-page blockquote { border-left: 3px solid #ccc; color: #555; }
+/* Bootstrap sets inline code to white-space: nowrap, which defeats the
+   overflow-wrap fix above for the long filenames/paths in the source
+   material. */
+.project-page code { white-space: normal; overflow-wrap: anywhere; }
+/* Don't rely on color alone to mark a link in running prose. */
+.project-page p a, .project-page li a, .project-page blockquote a { text-decoration: underline; }
 
 /* Mermaid diagrams */
 div.mermaid {
@@ -64,7 +85,7 @@ div.mermaid.mermaid-error::before { content: attr(data-error) "\A\A"; white-spac
 
 /* Filterable board widget */
 .board { margin: 1em 0 2em; }
-.board-meta { color: #777; font-size: 13px; margin-bottom: 10px; }
+.board-meta { color: #595959; font-size: 13px; margin-bottom: 10px; }
 .board-toolbar {
   display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;
 }
@@ -84,26 +105,41 @@ div.mermaid.mermaid-error::before { content: attr(data-error) "\A\A"; white-spac
   border-bottom: 1px solid #eee; padding: 8px 6px; text-align: left; vertical-align: top;
   word-wrap: break-word;
 }
-.board-table th { color: #777; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; }
+.board-table th { color: #595959; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; }
 .board-table th:nth-child(1), .board-table td:nth-child(1) { width: 6%; }
 .board-table th:nth-child(2), .board-table td:nth-child(2) { width: 8%; }
 .board-table th:nth-child(4), .board-table td:nth-child(4) { width: 12%; }
 .board-table th:nth-child(5), .board-table td:nth-child(5) { width: 9%; white-space: nowrap; }
 .board-table th:nth-child(6), .board-table td:nth-child(6) { width: 18%; }
 .board-table tbody tr:hover { background: #f8f8f8; }
-.board-linked { display: block; color: #888; margin-top: 2px; }
-.board-count { font-size: 12px; color: #777; margin-top: 6px; }
-.board-labels { color: #777; }
+.board-linked { display: block; color: #595959; margin-top: 2px; }
+.board-count { font-size: 12px; color: #595959; margin-top: 6px; }
+.board-labels { color: #595959; }
 
-.badge-pr { background-color: #5cb85c; }
-.badge-issue { background-color: #5bc0de; }
-.badge-status-done { background-color: #5cb85c; }
-.badge-status-in-progress { background-color: #f0ad4e; }
-.badge-status-todo { background-color: #999; }
+/* Dark text on a light tint rather than Bootstrap's white-on-saturated
+   badge colors, which fall well under the 4.5:1 WCAG AA minimum for
+   this text size at every hue used here. */
+.badge-pr { background-color: #f0e6fa; color: #6f3fa0; }
+.badge-issue { background-color: #dbeefc; color: #0b5a94; }
+.badge-status-done { background-color: #e0f3e0; color: #1f7a1f; }
+.badge-status-in-progress { background-color: #fdeccb; color: #7a5100; }
+.badge-status-todo { background-color: #ececec; color: #4d4d4d; }
 
 @media (max-width: 700px) {
   .board-table thead { display: none; }
   .board-table, .board-table tbody, .board-table tr, .board-table td { display: block; width: 100% !important; }
   .board-table tr { border-bottom: 1px solid #ddd; padding: 8px 0; }
   .board-table td { border: 0; padding: 2px 0; }
+  /* The header row is hidden when the table stacks, so label each
+     value with the column it came from. */
+  .board-table td[data-label]::before {
+    content: attr(data-label) ": ";
+    display: inline-block;
+    min-width: 4.5em;
+    color: #595959;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    font-weight: 700;
+  }
 }

@@ -28,6 +28,7 @@
     ).toLowerCase();
 
     const numTd = el('td');
+    numTd.dataset.label = '#';
     const numLink = el('a', null, '#' + item.number);
     numLink.href = item.url;
     numLink.target = '_blank';
@@ -36,10 +37,12 @@
     tr.appendChild(numTd);
 
     const typeTd = el('td');
+    typeTd.dataset.label = 'Type';
     typeTd.appendChild(el('span', 'badge ' + typeBadgeClass(item.type), item.type === 'PullRequest' ? 'PR' : 'Issue'));
     tr.appendChild(typeTd);
 
     const titleTd = el('td', 'board-title');
+    titleTd.dataset.label = 'Title';
     const titleLink = el('a', null, item.title);
     titleLink.href = item.url;
     titleLink.target = '_blank';
@@ -62,13 +65,16 @@
     tr.appendChild(titleTd);
 
     const statusTd = el('td');
+    statusTd.dataset.label = 'Status';
     statusTd.appendChild(el('span', 'badge ' + statusBadgeClass(item.status), item.status || '\u2014'));
     tr.appendChild(statusTd);
 
     const prioTd = el('td', null, item.priority || '\u2014');
+    prioTd.dataset.label = 'Priority';
     tr.appendChild(prioTd);
 
     const labelsTd = el('td', 'board-labels', (item.labels || []).join(', ') || '\u2014');
+    labelsTd.dataset.label = 'Labels';
     tr.appendChild(labelsTd);
 
     return tr;
