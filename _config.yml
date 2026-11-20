@@ -1,2 +1,19 @@
 permalink: /notes/:year/:month/:day/:title
 markdown: kramdown
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "default"
+      cv: "passive"
+      projects: "active"
+      contact: "passive"
+      extra_css: "projects.css"
+      extra_js: ["projects-board.js", "projects-mermaid.js"]

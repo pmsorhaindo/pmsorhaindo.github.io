@@ -1,0 +1,47 @@
+---
+layout: default
+title: Projects
+cv: passive
+projects: active
+contact: passive
+extra_css: projects.css
+description: Hobby and side projects by Paul-Michael (Michael) Sorhaindo — firmware research, audio-processor modelling, and an Octatrack modding community, with live status from each project's GitHub board.
+---
+<main class="projects-index">
+
+<h1>Projects</h1>
+
+<p class="lead">Three side projects, written up from their own repos, issues, PRs and project boards &mdash; including details from two private repos, which Michael has OK'd publishing. Each card below is <a href="#how-this-page-works">a snapshot, not a live feed</a>; see each project's page for the full write-up, diagrams and board.</p>
+
+<ul class="project-cards">
+{% assign projects = site.projects | sort: 'order' %}
+{% for project in projects %}
+  {% assign data = site.data.projects[project.slug] %}
+  <li class="project-card">
+    <h2><a href="{{ project.url | relative_url }}">{{ project.title }}</a><span class="project-visibility">{{ project.visibility }} repo</span></h2>
+
+    <span class="project-section-label">What it is</span>
+    <p>{{ project.summary }}</p>
+
+    <span class="project-section-label">Goals / direction</span>
+    <p>{{ project.direction }}</p>
+
+    <span class="project-section-label">Status</span>
+    <p>{{ project.status }}</p>
+    {% if data.board.counts %}
+    <p class="board-counts">
+      <span class="badge badge-status-done">{{ data.board.counts.Done | default: 0 }} done</span>
+      <span class="badge badge-status-in-progress">{{ data.board.counts['In Progress'] | default: 0 }} in progress</span>
+      <span class="badge badge-status-todo">{{ data.board.counts.Todo | default: 0 }} todo</span>
+    </p>
+    {% endif %}
+
+    <p class="project-as-of">As of {{ project.as_of }} ({{ project.timezone }}) &middot; <a href="{{ project.url | relative_url }}">full write-up &rarr;</a></p>
+  </li>
+{% endfor %}
+</ul>
+
+<h2 id="how-this-page-works">How this page works</h2>
+<p>Each project's page is built from a Markdown write-up plus its GitHub Projects board, pulled into this site as data. The board table on each page is read from that project's board snapshot and filters in the browser &mdash; nothing here calls GitHub live, so numbers are as of the date shown, not the current instant. Diagrams are <a href="https://mermaid.js.org/" target="_blank" rel="noopener noreferrer">Mermaid</a> flowcharts and state diagrams, rendered in your browser from the same source text written into each page. Items the source material itself marks as uncertain, unvalidated or provisional are called out the same way on these pages.</p>
+
+</main>

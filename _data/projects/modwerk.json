@@ -1,0 +1,387 @@
+{
+  "project": "Modwerk",
+  "repo": "pmsorhaindo/modwerk",
+  "repo_url": "https://github.com/pmsorhaindo/modwerk",
+  "visibility": "public",
+  "homepage": "https://modwerk.app/",
+  "as_of": "2026-11-20T21:00:00+01:00",
+  "timezone": "Europe/Amsterdam",
+  "board": {
+    "number": 10,
+    "url": "https://github.com/users/pmsorhaindo/projects/10",
+    "totalCount": 25,
+    "retrieved": 25,
+    "counts": {
+      "Done": 1,
+      "In Progress": 8,
+      "Todo": 16
+    },
+    "items": [
+      {
+        "number": 27,
+        "type": "Issue",
+        "title": "Test Issue!",
+        "status": "Todo",
+        "priority": "P3",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/27"
+      },
+      {
+        "number": 22,
+        "type": "Issue",
+        "title": "C7: Keep cube-machine in step with upstream main (merge, no force-push)",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "upstream-sync"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/22"
+      },
+      {
+        "number": 21,
+        "type": "Issue",
+        "title": "C6: Run pr:ready / module:doctor and cover the untested CUBE cases",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "ci"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/21"
+      },
+      {
+        "number": 20,
+        "type": "Issue",
+        "title": "C5: Confirm the UNI default target",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "decision"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/20"
+      },
+      {
+        "number": 19,
+        "type": "Issue",
+        "title": "C4: Confirm CUBE on T5-T8 reverting to FLEX",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "decision"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/19"
+      },
+      {
+        "number": 18,
+        "type": "Issue",
+        "title": "C3: Decide whether to add the octamod.module.json catalogue manifest for CUBE",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "ci",
+          "decision"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/18"
+      },
+      {
+        "number": 17,
+        "type": "Issue",
+        "title": "C2: Stock FX regression check on hardware, all 13 incl. SPRING REV (CUBE build)",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "hardware-test"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/17"
+      },
+      {
+        "number": 16,
+        "type": "Issue",
+        "title": "C1: Run the PR #7 hardware checklist (items 2-9) on the Octatrack",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "hardware-test"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/16"
+      },
+      {
+        "number": 15,
+        "type": "Issue",
+        "title": "T6: Document that a remix listing no stock effects ships FX2 with only NONE",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "documentation"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/15"
+      },
+      {
+        "number": 14,
+        "type": "Issue",
+        "title": "T5: Decide on fast-forwarding fork main to upstream",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "decision"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/14"
+      },
+      {
+        "number": 13,
+        "type": "Issue",
+        "title": "T4: Keep turing-machine in step with upstream main (merge, no force-push)",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "upstream-sync"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/13"
+      },
+      {
+        "number": 12,
+        "type": "Issue",
+        "title": "T3: Run pr:ready / module:doctor and fix the Turing manifest media check",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "ci"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/12"
+      },
+      {
+        "number": 11,
+        "type": "Issue",
+        "title": "T2: Stock FX regression check on hardware (Turing build)",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "hardware-test"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/11"
+      },
+      {
+        "number": 10,
+        "type": "Issue",
+        "title": "T1: Run the PR #6 hardware checklist (items 2-7) on the Octatrack",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "hardware-test"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/10"
+      },
+      {
+        "number": 9,
+        "type": "Issue",
+        "title": "CUBE: two-oscillator wavetable machine for tracks 1-4 (PR #7)",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "workstream"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/9"
+      },
+      {
+        "number": 8,
+        "type": "Issue",
+        "title": "TURING: Turing Machine for MIDI tracks (PR #6)",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "workstream"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/8"
+      },
+      {
+        "number": 24,
+        "type": "Issue",
+        "title": "T7: Study upstream's MIDI Generator and migrate Turing onto it",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "upstream-sync",
+          "decision"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/issues/24"
+      },
+      {
+        "number": 25,
+        "type": "PullRequest",
+        "title": "Port Turing to a base 0.7.9 MIDI generator module",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/25",
+        "draft": true
+      },
+      {
+        "number": 7,
+        "type": "PullRequest",
+        "title": "CUBE machine (tracks 1-4)",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/7"
+      },
+      {
+        "number": 6,
+        "type": "PullRequest",
+        "title": "Turing Machine for MIDI tracks (static-stock, on upstream b5ac6142)",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/6"
+      },
+      {
+        "number": 5,
+        "type": "PullRequest",
+        "title": "Docs: extended amp and filter envelopes",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [
+          "documentation"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/5"
+      },
+      {
+        "number": 4,
+        "type": "PullRequest",
+        "title": "Docs: design a Piston Honda Mk3-style Octatrack machine",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [
+          "documentation"
+        ],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/4"
+      },
+      {
+        "number": 3,
+        "type": "PullRequest",
+        "title": "Turing machine M2: per-track registers, PLAY-time seed, per-project settings",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/3"
+      },
+      {
+        "number": 2,
+        "type": "PullRequest",
+        "title": "Turing machine M1: draft module for one MIDI track",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/2"
+      },
+      {
+        "number": 1,
+        "type": "PullRequest",
+        "title": "Turing machine MIDI-track mode: feasibility study",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/modwerk/pull/1"
+      }
+    ]
+  },
+  "dependencies": {
+    "edges": [
+      {
+        "from": 8,
+        "to": 6,
+        "kind": "workstream",
+        "note": "TURING lands from PR #6"
+      },
+      {
+        "from": 8,
+        "to": 10,
+        "kind": "workstream"
+      },
+      {
+        "from": 8,
+        "to": 11,
+        "kind": "workstream"
+      },
+      {
+        "from": 8,
+        "to": 12,
+        "kind": "workstream"
+      },
+      {
+        "from": 8,
+        "to": 13,
+        "kind": "workstream"
+      },
+      {
+        "from": 8,
+        "to": 14,
+        "kind": "workstream"
+      },
+      {
+        "from": 8,
+        "to": 15,
+        "kind": "workstream"
+      },
+      {
+        "from": 8,
+        "to": 24,
+        "kind": "workstream"
+      },
+      {
+        "from": 24,
+        "to": 25,
+        "kind": "follows",
+        "note": "T7 study; draft PR #25 is the migration onto upstream's MIDI generator"
+      },
+      {
+        "from": 6,
+        "to": 25,
+        "kind": "related"
+      },
+      {
+        "from": 9,
+        "to": 7,
+        "kind": "workstream",
+        "note": "CUBE lands from PR #7"
+      },
+      {
+        "from": 9,
+        "to": 16,
+        "kind": "workstream"
+      },
+      {
+        "from": 9,
+        "to": 17,
+        "kind": "workstream"
+      },
+      {
+        "from": 9,
+        "to": 18,
+        "kind": "workstream"
+      },
+      {
+        "from": 9,
+        "to": 19,
+        "kind": "workstream"
+      },
+      {
+        "from": 9,
+        "to": 20,
+        "kind": "workstream"
+      },
+      {
+        "from": 9,
+        "to": 21,
+        "kind": "workstream"
+      },
+      {
+        "from": 9,
+        "to": 22,
+        "kind": "workstream"
+      }
+    ]
+  },
+  "notes": [
+    "Issue #27 is a test issue left on the board from the webhook setup.",
+    "Draft PR #25 says it must not be merged until a base 0.7.9 rebuild is tested on a real Octatrack."
+  ]
+}

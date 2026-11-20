@@ -1,0 +1,596 @@
+{
+  "project": "ModellingAudioProcessors",
+  "repo": "pmsorhaindo/ModellingAudioProcessors",
+  "repo_url": "https://github.com/pmsorhaindo/ModellingAudioProcessors",
+  "visibility": "private",
+  "as_of": "2026-11-20T21:07:00+01:00",
+  "timezone": "Europe/Amsterdam",
+  "board": {
+    "number": 7,
+    "url": "https://github.com/users/pmsorhaindo/projects/7",
+    "totalCount": 36,
+    "retrieved": 36,
+    "items": [
+      {
+        "number": 127,
+        "type": "Issue",
+        "title": "macOS fullstage CI job has little headroom (14.4 of 20 min); shard it like the Linux job",
+        "status": "Todo",
+        "priority": "P2",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/127"
+      },
+      {
+        "number": 126,
+        "type": "Issue",
+        "title": "ngspice hangs in uninterruptible state under Rosetta on the MacBook Air; move to native arm64 ngspice",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/126"
+      },
+      {
+        "number": 125,
+        "type": "Issue",
+        "title": "Complete the TIGHT ngspice convergence records for the 6AS6 T and P2 references",
+        "status": "Todo",
+        "priority": "P2",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/125"
+      },
+      {
+        "number": 124,
+        "type": "Issue",
+        "title": "Fix the shared burst recovery-time metric (P2 0.6 mA is a strict expected-fail in CI)",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/124"
+      },
+      {
+        "number": 123,
+        "type": "Issue",
+        "title": "6AS6 P2 mode: refit the g3 cut-off region of the device fit before P2 can be supported",
+        "status": "Todo",
+        "priority": "P1",
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/123"
+      },
+      {
+        "number": 115,
+        "type": "Issue",
+        "title": "Parameter smoothing and mode switching for the 6AS6 / Gyre path",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "enhancement",
+          "cpp",
+          "6as6"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/115"
+      },
+      {
+        "number": 114,
+        "type": "Issue",
+        "title": "Design the 12AX7 swap-in in the Gyre plugin",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "cpp",
+          "6as6"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/114"
+      },
+      {
+        "number": 113,
+        "type": "Issue",
+        "title": "Aliasing assessment and eco / quality decision for the 6AS6 path",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "validation",
+          "aliasing",
+          "6as6"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/113"
+      },
+      {
+        "number": 111,
+        "type": "Issue",
+        "title": "Research and prototype T/P1/P2 mode wiring for the 6AS6 stage",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [
+          "research",
+          "6as6"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/111"
+      },
+      {
+        "number": 112,
+        "type": "Issue",
+        "title": "Decide and, if adopted, add an unvalidated g1 grid-current model to the 6AS6 stage",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "research",
+          "6as6"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/112"
+      },
+      {
+        "number": 121,
+        "type": "PullRequest",
+        "title": "#111: T/P1/P2 mode wiring for the 6AS6 stage",
+        "status": "In Progress",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/121"
+      },
+      {
+        "number": 109,
+        "type": "Issue",
+        "title": "Upgrade modeling tooling into a reusable system",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "validation",
+          "research"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/109"
+      },
+      {
+        "number": 108,
+        "type": "Issue",
+        "title": "Research: Sherman filter bank as next modeling target",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "research"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/108"
+      },
+      {
+        "number": 107,
+        "type": "Issue",
+        "title": "Research: Overstayer as next modeling target",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "research"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/107"
+      },
+      {
+        "number": 106,
+        "type": "Issue",
+        "title": "Future: move Octatrack work to modwerk repo",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "octatrack"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/106"
+      },
+      {
+        "number": 105,
+        "type": "Issue",
+        "title": "VST3/AU plugin work: graphics and design track",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/105"
+      },
+      {
+        "number": 104,
+        "type": "Issue",
+        "title": "C++ port of 6AS6 pentode with correct component values",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "cpp",
+          "6as6"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/104"
+      },
+      {
+        "number": 103,
+        "type": "Issue",
+        "title": "Investigate filter for v1",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "research",
+          "6as6"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/103"
+      },
+      {
+        "number": 90,
+        "type": "Issue",
+        "title": "Evaluate lane-math options (vector vs scalar fast math vs libm) for accuracy and CPU across platforms",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "perf",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/90"
+      },
+      {
+        "number": 75,
+        "type": "Issue",
+        "title": "Decision: v1 plugin scope (12AX7 only, or 6AS6 / filter) and a working name",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "question",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/75"
+      },
+      {
+        "number": 24,
+        "type": "Issue",
+        "title": "4b: DSP56300 fixed-point prototype vs the ~411 cycles/sample slot budget",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "perf",
+          "octatrack"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/24"
+      },
+      {
+        "number": 23,
+        "type": "Issue",
+        "title": "4a: Cut-down model: 2-D lookup-table nonlinearity, 3 states, 2× IIR, checked against ngspice",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "aliasing",
+          "octatrack"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/23"
+      },
+      {
+        "number": 11,
+        "type": "Issue",
+        "title": "Octatrack (modwerk) port",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "workstream",
+          "octatrack"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/11"
+      },
+      {
+        "number": 10,
+        "type": "Issue",
+        "title": "C++ core and plugin",
+        "status": "Todo",
+        "priority": null,
+        "labels": [
+          "workstream",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/10"
+      },
+      {
+        "number": 19,
+        "type": "Issue",
+        "title": "3a: Header-only realtime C++ core with reference test vectors",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/19",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/62"
+        ]
+      },
+      {
+        "number": 20,
+        "type": "Issue",
+        "title": "3b: Per-instance CPU benchmark (x86, and Apple silicon if available)",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "perf",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/20",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/63"
+        ]
+      },
+      {
+        "number": 21,
+        "type": "Issue",
+        "title": "3c: Stereo SIMD",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "perf",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/21",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/65"
+        ]
+      },
+      {
+        "number": 22,
+        "type": "Issue",
+        "title": "3d: AU/VST3 wrapper with a licensing note",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/22",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/91"
+        ]
+      },
+      {
+        "number": 39,
+        "type": "Issue",
+        "title": "Musical audio demo renders (offline render script, CC0/PD excerpts)",
+        "status": "Done",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/39",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/43"
+        ]
+      },
+      {
+        "number": 67,
+        "type": "Issue",
+        "title": "Stereo SIMD: vectorise exp/log1p/pow and the step limiter across lanes in dkcore::StereoStage",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "perf",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/67",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/68"
+        ]
+      },
+      {
+        "number": 92,
+        "type": "PullRequest",
+        "title": "Cut-down 12AX7 prototype: 3-state 2-D LUT, 2× IIR (Refs #23)",
+        "status": "Todo",
+        "priority": null,
+        "labels": [],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/92"
+      },
+      {
+        "number": 70,
+        "type": "Issue",
+        "title": "Silence gives a ~1 µV DC offset at rest; test_silence_has_no_startup_thump[hq] fails on Apple silicon",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "bug",
+          "validation",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/70",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/84"
+        ]
+      },
+      {
+        "number": 72,
+        "type": "Issue",
+        "title": "CI: add a macOS arm64 job (patch prepared; needs workflow scope)",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "validation",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/72",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/81",
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/85"
+        ]
+      },
+      {
+        "number": 73,
+        "type": "Issue",
+        "title": "Parameter smoothing for drive / output / bias (needed for the plugin)",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "enhancement",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/73",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/97"
+        ]
+      },
+      {
+        "number": 74,
+        "type": "Issue",
+        "title": "Host sample rates other than 48 kHz are untested (44.1 / 88.2 / 96 kHz)",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "validation",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/74",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/97"
+        ]
+      },
+      {
+        "number": 76,
+        "type": "Issue",
+        "title": "x86-64 stereo benchmark run (#21 leftover; needs go-ahead)",
+        "status": "Done",
+        "priority": null,
+        "labels": [
+          "perf",
+          "cpp"
+        ],
+        "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/issues/76",
+        "linked": [
+          "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/94"
+        ]
+      }
+    ],
+    "counts": {
+      "Done": 11,
+      "In Progress": 2,
+      "Todo": 23
+    },
+    "retrieval_note": "All 36 items retrieved with `gh project item-list 7 --owner pmsorhaindo --limit 100` at 21:07 Europe/Amsterdam on 20 Nov 2026, after an earlier first-page (30) fetch hit a Projects GraphQL rate limit."
+  },
+  "dependencies": {
+    "edges": [
+      {
+        "from": 102,
+        "to": 110,
+        "kind": "depends",
+        "note": "completed; #110 depends on #102"
+      },
+      {
+        "from": 102,
+        "to": 111,
+        "kind": "depends"
+      },
+      {
+        "from": 102,
+        "to": 112,
+        "kind": "depends"
+      },
+      {
+        "from": 102,
+        "to": 113,
+        "kind": "depends"
+      },
+      {
+        "from": 102,
+        "to": 103,
+        "kind": "related",
+        "note": "can run in parallel on corner-frequency choice"
+      },
+      {
+        "from": 110,
+        "to": 111,
+        "kind": "related",
+        "note": "shares the bias network"
+      },
+      {
+        "from": 110,
+        "to": 113,
+        "kind": "depends",
+        "note": "re-run #113 after #110 and #111"
+      },
+      {
+        "from": 111,
+        "to": 113,
+        "kind": "depends"
+      },
+      {
+        "from": 111,
+        "to": 123,
+        "kind": "related",
+        "note": "follow-up from PR #121; P2 cannot be supported until #123"
+      },
+      {
+        "from": 110,
+        "to": 104,
+        "kind": "depends"
+      },
+      {
+        "from": 111,
+        "to": 104,
+        "kind": "depends"
+      },
+      {
+        "from": 113,
+        "to": 104,
+        "kind": "depends"
+      },
+      {
+        "from": 104,
+        "to": 114,
+        "kind": "depends"
+      },
+      {
+        "from": 75,
+        "to": 114,
+        "kind": "depends"
+      },
+      {
+        "from": 104,
+        "to": 115,
+        "kind": "depends"
+      },
+      {
+        "from": 73,
+        "to": 115,
+        "kind": "related",
+        "note": "#115 extends completed #73"
+      },
+      {
+        "from": 10,
+        "to": 19,
+        "kind": "workstream"
+      },
+      {
+        "from": 11,
+        "to": 23,
+        "kind": "workstream"
+      },
+      {
+        "from": 11,
+        "to": 24,
+        "kind": "workstream"
+      },
+      {
+        "from": 11,
+        "to": 106,
+        "kind": "related",
+        "note": "future move to modwerk, tracking only"
+      },
+      {
+        "from": 23,
+        "to": 92,
+        "kind": "related",
+        "note": "Open PR #92 implements the cut-down 12AX7 prototype referenced by #23"
+      }
+    ]
+  },
+  "open_prs": [
+    {
+      "number": 121,
+      "title": "#111: T/P1/P2 mode wiring for the 6AS6 stage",
+      "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/121",
+      "draft": false,
+      "on_board": true,
+      "board_status": "In Progress"
+    },
+    {
+      "number": 92,
+      "title": "Cut-down 12AX7 prototype: 3-state 2-D LUT, 2× IIR (Refs #23)",
+      "url": "https://github.com/pmsorhaindo/ModellingAudioProcessors/pull/92",
+      "draft": false,
+      "on_board": true,
+      "board_status": "Todo"
+    }
+  ]
+}
